@@ -2,53 +2,67 @@ Ext.define('App.view.cpce.FiltroPanel', {
     extend: 'Ext.tab.Panel',
     xtype: 'filtroPanel',
     id: 'filtroPanel',
+    idItem: 'filtroPanel',
     width: 220,
     region: 'lest',
     layout: 'fit',
     constructor: function() {
         var me = this;
 
+        var bxproduto = Ext.create('Ext.form.ComboBox',{
+            width: 140,
+            margin: '6 2 2 2',
+            name: 'produto',
+            id: 'bxproduto',
+            store: Ext.data.Store({
+                fields: [{ name: 'codItem' }, { name: 'descricao' }],
+                proxy: {
+                    type: 'ajax',
+                    url: BASEURL + '/api/CpCe/listarProdutos',
+                    reader: { type: 'json', root: 'data' }
+                }
+            }),
+            queryParam: 'codigo',
+            queryMode: 'remote',
+            displayTpl: Ext.create('Ext.XTemplate',
+                '<tpl for=".">',
+                '{codItem} {descricao}',
+                '</tpl>'), 
+            valueField: 'codItem',
+            emptyText: 'Cod. Produto',
+            matchFieldWidth: false,
+            minChars: 5,
+            listeners: {                    
+            },
+            allowBlank: false, 
+            listConfig: {
+                loadingText: 'Carregando...',
+                emptyText: '<div class="notificacao-red">Nenhuma produto encontrado!</div>',
+                getInnerTpl: function() {
+                    return '{[ values.codItem]} {[ values.descricao]} {[ values.marca]}';
+                }
+            }
+        });
+
         Ext.applyIf(me, {
+
 
             items:[
                 {
                     xtype: 'panel',
-                    title: 'Fornecedor',
+                    id: 'pform',
+                    idItem: 'pform',
+                    title: 'Filtros',
                     scrollable: true,
                     items: [
                         {
                             xtype: 'form',
+                            id: 'pform2',
                             items: [
                                 {
                                     xtype: 'fieldset',
-                                    title: 'Fornecedor',
-                                    layout: {
-                                        type: 'hbox',
-                                        align: 'middle'
-                                    },
-                                    defaults: {
-                                        margin: '6 2 2 2'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'textfield',
-                                            name: 'fornecedor',
-                                            emptyText: 'Fornecedor',
-                                            width: 140
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            iconCls: 'fa fa-file',
-                                            tooltip: 'Limpar',
-                                            handler: function(form) {
-        
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'fieldset',
                                     title: 'Produto',
+                                    id: 'fprotudo',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'
@@ -57,18 +71,14 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         margin: '6 2 2 2'
                                     },
                                     items: [
-                                        {
-                                            xtype: 'textfield',
-                                            name: 'produto',
-                                            emptyText: 'Produto',
-                                            width: 140
-                                        },
+                                        bxproduto,
                                         {
                                             xtype: 'button',
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('combobox');
+                                                objValor.setSelection(null);
                                             }
                                         }
                                     ]
@@ -76,6 +86,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     title: 'Curva',
+                                    id: 'fcurva',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'
@@ -84,6 +95,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'combobox',
                                             name: 'curva',
+                                            id: 'curva',
                                             emptyText: 'Curva',
                                             width: 100,
                                             margin: '6 2 2 2',
@@ -105,7 +117,8 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             tooltip: 'Limpar',
                                             margin: '6 2 2 42',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('combobox');
+                                                objValor.setSelection(null);
                                             }
                                         }
                                     ]
@@ -113,6 +126,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     title: 'Faixa de Clientes',
+                                    id: 'ffaixa',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'
@@ -121,6 +135,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'combobox',
                                             name: 'faixacli',
+                                            id: 'faixacli',
                                             emptyText: 'Faixa',
                                             width: 100,
                                             margin: '6 2 2 2',
@@ -144,37 +159,8 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             tooltip: 'Limpar',
                                             margin: '6 2 2 42',
                                             handler: function(form) {
-        
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'fieldset',
-                                    title: 'Data última Entrada',
-                                    layout: {
-                                        type: 'hbox',
-                                        align: 'middle'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'datefield',
-                                            name: 'dtultima',
-                                            id: 'dtultima',
-                                            margin: '2 2 2 2',
-                                            width: 132,
-                                            labelWidth: 20,
-                                            format: 'd/m/Y',
-                                            altFormats: 'dmY',
-                                            emptyText: '__/__/____'
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            iconCls: 'fa fa-file',
-                                            tooltip: 'Limpar',
-                                            margin: '6 2 2 10',
-                                            handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('combobox');
+                                                objValor.setSelection(null);
                                             }
                                         }
                                     ]
@@ -182,6 +168,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     title: '% Variação x ùltima entrada',
+                                    id: 'fvariaUltentrada',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'
@@ -193,6 +180,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'numberfield',
                                             name: 'variaUltentrada',
+                                            id: 'variaUltentrada',
                                             width: 140
                                         },
                                         {
@@ -200,13 +188,15 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('numberfield');
+                                                objValor.setValue(null);
                                             }
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'fieldset',
+                                    id: 'fvariaUltcusto',
                                     title: '% Variação x último custo do ano anterior',
                                     layout: {
                                         type: 'hbox',
@@ -219,6 +209,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'numberfield',
                                             name: 'variaUltcusto',
+                                            id: 'variaUltcusto',
                                             width: 140
                                         },
                                         {
@@ -226,13 +217,15 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('numberfield');
+                                                objValor.setValue(null);
                                             }
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'fieldset',
+                                    id: 'fvariaCustomedio',
                                     title: '% Variação x custo médio ano anterior',
                                     layout: {
                                         type: 'hbox',
@@ -245,6 +238,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'numberfield',
                                             name: 'variaCustomedio',
+                                            id: 'variaCustomedio',
                                             width: 140
                                         },
                                         {
@@ -252,13 +246,15 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('numberfield');
+                                                objValor.setValue(null);
                                             }
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'fieldset',
+                                    id: 'fvariaEmergmedio',
                                     title: '% Variação x emergencial médio ano anterior',
                                     layout: {
                                         type: 'hbox',
@@ -271,6 +267,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'numberfield',
                                             name: 'variaEmergmedio',
+                                            id: 'variaEmergmedio',
                                             width: 140
                                         },
                                         {
@@ -278,13 +275,15 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('numberfield');
+                                                objValor.setValue(null);
                                             }
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'fieldset',
+                                    id: 'fvaria3mes',
                                     title: '% Variação x emergencial últimos 3 meses ',
                                     layout: {
                                         type: 'hbox',
@@ -297,6 +296,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'numberfield',
                                             name: 'varia3mes',
+                                            id: 'varia3mes',
                                             width: 140
                                         },
                                         {
@@ -304,13 +304,15 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('numberfield');
+                                                objValor.setValue(null);
                                             }
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'fieldset',
+                                    id: 'fvaria6mes',
                                     title: '% Variação x emergencial últimos 6 meses ',
                                     layout: {
                                         type: 'hbox',
@@ -323,6 +325,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'numberfield',
                                             name: 'varia6mes',
+                                            id: 'varia6mes',
                                             width: 140
                                         },
                                         {
@@ -330,13 +333,15 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('numberfield');
+                                                objValor.setValue(null);
                                             }
                                         }
                                     ]
                                 },
                                 {
                                     xtype: 'fieldset',
+                                    id: 'fvaria12mes',
                                     title: '% Variação x emergencial últimos 12 meses ',
                                     layout: {
                                         type: 'hbox',
@@ -349,6 +354,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                         {
                                             xtype: 'numberfield',
                                             name: 'varia12mes',
+                                            id: 'varia12mes',
                                             width: 140
                                         },
                                         {
@@ -356,7 +362,8 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
                                             handler: function(form) {
-        
+                                                var objValor = form.up('fieldset').down('numberfield');
+                                                objValor.setValue(null);
                                             }
                                         }
                                     ]
@@ -368,7 +375,15 @@ Ext.define('App.view.cpce.FiltroPanel', {
                 },
                 {
                     xtype: 'panel',
-                    title: 'Informações'
+                    title: 'Marcas',
+                    id: 'pmarcagrid',
+                    idItem: 'pmarcagrid',
+                    scrollable: true,
+                    items: [
+                        {
+                            xtype: 'MarcaGrid',
+                        }
+                    ]
                 }
             ]
             

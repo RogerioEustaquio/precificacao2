@@ -4,8 +4,10 @@ Ext.define('App.controller.CpCeController', {
     requires: [
         'App.view.cpce.Main',
         'App.view.cpce.CpCeToolbar',
-        'App.view.cpce.CpCeGrid',
-        'App.view.cpce.FiltroPanel'
+        // 'App.view.cpce.CpCeGrid',
+        'App.view.cpce.FiltroPanel',
+        'App.view.cpce.MarcaGrid',
+        'App.view.cpce.ItemGrid'
     ],
 
     control: {

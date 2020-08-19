@@ -5,7 +5,7 @@ Ext.define('App.view.cpcf.Main', {
     itemId: 'cpcfmain',
     requires: [
     ],
-    title: 'Comparativo custo compra fábrica',
+    title: 'Comparativo custo fábrica',
     layout: 'border',
 
     constructor: function() {

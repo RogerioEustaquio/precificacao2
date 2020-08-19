@@ -5,7 +5,7 @@ Ext.define('App.view.cpce.Main', {
     itemId: 'cpcemain',
     requires: [
     ],
-    title: 'Comparativo custo compra emergencial',
+    title: 'Comparativo custo emergencial',
     layout: 'border',
 
     constructor: function() {
@@ -36,9 +36,12 @@ Ext.define('App.view.cpce.Main', {
                     items:[
                         {
                             xtype: 'panel',
+                            id: 'pprincipal',
+                            idItem: 'pprincipal',
                             layout: 'hbox',
+                            width: '100%',
                             defaults:{
-                                border: true,
+                                border: false,
                                 margin: '1 1 1 1',
                                 height : '100%',
                             },
@@ -48,8 +51,16 @@ Ext.define('App.view.cpce.Main', {
                                     hidden: true
                                 },
                                 {
-                                    xtype: 'cpcegrid',
-                                    flex: 1
+                                    xtype:'panel',
+                                    id: 'itemgridpanel',
+                                    idItem: 'itemgridpanel',
+                                    layout: 'fit',
+                                    flex: 1,
+                                    items: [
+                                        {
+                                            xtype: 'ItemGrid'
+                                        }
+                                    ]                               
                                 }
                             ]
                         }

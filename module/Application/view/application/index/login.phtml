@@ -42,6 +42,15 @@ Ext.onReady(function() {
                 }else{
                     window.location.href = BASEURL + '/';
                 }
+            },
+            erro: function (){
+                new Noty({
+                        theme: 'relax',
+                        layout: 'bottomRight',
+                        type: 'error',
+                        closeWith: [],
+                        text: 'Erro sistema login.'+result.msg
+                    }).show();
             }
         });
     };
