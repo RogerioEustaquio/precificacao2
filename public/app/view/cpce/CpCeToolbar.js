@@ -102,6 +102,7 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                 var dtfim = me.down('#dtfim').getRawValue();
                 var dtinicioe = me.down('#dtinicioe').getRawValue();
                 var dtfime = me.down('#dtfime').getRawValue();
+                var nrnota = me.down('#nrnota').getRawValue();
 
                 var itemgrid = me.up('container').down('#container1').down('#pprincipal').down('#itemgridpanel').down('grid');
                 var marcagrid = me.up('container').down('#container1').down('#pprincipal').down('#filtroPanel').down('#pmarcagrid').down('grid');
@@ -141,6 +142,7 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                     dtfim:  dtfim,
                     dtinicioe: dtinicioe,
                     dtfime:  dtfime,
+                    nrnota: nrnota,
                     produto: produto,
                     curva: pcurva,
                     faixacli: pfaixacli,
@@ -158,6 +160,13 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                 itemgrid.getStore().load();
 
             }
+        });
+
+        var btnnota = Ext.create('Ext.form.field.Text',{
+            name: 'nrnota',
+            id: 'nrnota',
+            emptyText: 'Número Nota',
+            width: 120
         });
 
         var btnfilter = Ext.create('Ext.button.Button',{
@@ -186,6 +195,7 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                 btdtfim,
                 btdtinicioe,
                 btdtfime,
+                btnnota,
                 btnfilter,
                 btnSearch
             ]

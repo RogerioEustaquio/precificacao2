@@ -246,7 +246,8 @@ class CpCeController extends AbstractRestfulController
         $dtinicio   = $this->params()->fromQuery('dtinicio',null);
         $dtfim      = $this->params()->fromQuery('dtfim',null);
         $dtinicioe  = $this->params()->fromQuery('dtinicioe',null);
-        $dtfime      = $this->params()->fromQuery('dtfime',null);
+        $dtfime     = $this->params()->fromQuery('dtfime',null);
+        $nrnota     = $this->params()->fromQuery('nrnota',null);
         $inicio     = $this->params()->fromQuery('start',null);
         $final      = $this->params()->fromQuery('limit',null);
 
@@ -290,6 +291,10 @@ class CpCeController extends AbstractRestfulController
 
             if($dtfime){
                 $andSql .= " and trunc(c.data_entrada) <= '$dtfime";
+            }
+
+            if($nrnota){
+                $andSql .= " and c.numero_nota||'-'||c.serie_nota like '$nrnota%'";
             }
 
             if($produto){
