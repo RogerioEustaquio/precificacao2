@@ -1,8 +1,6 @@
 Ext.define('App.view.cpce.ItemGrid', {
     extend: 'Ext.grid.Panel',
     xtype: 'ItemGrid',
-    // columnLines: true,
-    // selType: 'checkboxmodel',
     margin: '1 1 1 1',
     requires: [
         'Ext.toolbar.Paging',
@@ -33,10 +31,23 @@ Ext.define('App.view.cpce.ItemGrid', {
                                     {name:'custoAnterior',mapping:'custoAnterior', type: 'number'},
                                     {name:'custoOperacao',mapping:'custoOperacao', type: 'number'},
                                     {name:'custoResultante',mapping:'custoResultante', type: 'number'},
-                                    {name:'varCustoOperAnterior',mapping:'varCustoOperAnterior', type: 'number'},
                                     {name:'qdteAnterior',mapping:'qtdeAnterior', type: 'number'},
                                     {name:'qdteOperacao',mapping:'qtdeOperacao', type: 'number'},
-                                    {name:'qtdeResultante',mapping:'qtdeResultante', type: 'number'}
+                                    {name:'qtdeResultante',mapping:'qtdeResultante', type: 'number'},
+                                    {name:'custoUltAnoAnterior',mapping:'custoUltAnoAnterior', type: 'number'},
+                                    {name:'custoMedAnoAnterior',mapping:'custoMedAnoAnterior', type: 'number'},
+                                    {name:'custoMedEAnoAnterior',mapping:'custoMedEAnoAnterior', type: 'number'},
+                                    {name:'custoMedE_12mAnterior',mapping:'custoMedE_12mAnterior', type: 'number'},
+                                    {name:'custoMedE_6mAnterior',mapping:'custoMedE_6mAnterior', type: 'number'},
+                                    {name:'custoMedE_3mAnterior',mapping:'custoMedE_3mAnterior', type: 'number'},
+
+                                    {name:'vOpeAnterior',mapping:'vOpeAnterior', type: 'number'},
+                                    {name:'vOpeUltAnoAnterior',mapping:'vOpeUltAnoAnterior', type: 'number'},
+                                    {name:'vOpeMedAnoAnterior',mapping:'vOpeMedAnoAnterior', type: 'number'},
+                                    {name:'vOpeMedEAnoAnterior',mapping:'vOpeMedEAnoAnterior', type: 'number'},
+                                    {name:'vOpeMedE_12mAnterior',mapping:'vOpeMedE_12mAnterior', type: 'number'},
+                                    {name:'vOpeMedE_6mAnterior',mapping:'vOpeMedE_6mAnterior', type: 'number'},
+                                    {name:'vOpeMedE_3mAnterior',mapping:'vOpeMedE_3mAnterior', type: 'number'}
                                     ]
                 }),
                 pageSize: 50,
@@ -52,10 +63,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                         totalProperty: 'total'
                     }
                 },
-                groupField: 'numeroNota',
-                // grouper: {
-                //     property: 'numeroNota'
-                // }
+                groupField: 'numeroNota'
     }),
     columns: [
         {
@@ -83,11 +91,12 @@ Ext.define('App.view.cpce.ItemGrid', {
         {
             text: 'Cnpj',
             dataIndex: 'cnpj',
-            width: 110
+            width: 130
         },
         {
             text: 'Nome',
             dataIndex: 'nome',
+            minWidth: 60,
             flex: 1
         },
         {
@@ -103,20 +112,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                 var utilFormat = Ext.create('Ext.ux.util.Format');
                 return utilFormat.Value(v);
             },
-            summaryType: function(records) {
-                var i = 0,
-                    length = records.length,
-                    total = 0,
-                    record;
-
-                for (; i < length; ++i) {
-                    record = records[i];
-                    total = parseFloat(total) +  parseFloat(record.get('valorNota'));
-                }
-
-                var utilFormat = Ext.create('Ext.ux.util.Format');
-                return utilFormat.Value(total);
-            }
+            summaryType: 'min'
         },
         {
             text: 'Marca',
@@ -125,13 +121,14 @@ Ext.define('App.view.cpce.ItemGrid', {
         },
         {
             text: 'Código',
-            dataIndex: 'cdItem',
-            width: 74
+            dataIndex: 'codItem',
+            width: 110
         },
         {
             text: 'Descrição',
             dataIndex: 'descricao',
-            width: 74
+            minWidth: 86,
+            flex:1
         },
         {
             text: 'Dt. Compra Ant.',
@@ -139,39 +136,224 @@ Ext.define('App.view.cpce.ItemGrid', {
             width: 120
         },
         {
-            text: 'Custo Anterior',
-            dataIndex: 'custoAnterior',
-            width: 120
+            text: 'Custo',
+            columns:[
+                {
+                    text: 'Anterior',
+                    dataIndex: 'custoAnterior',
+                    width: 80,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Operação',
+                    dataIndex: 'custoOperacao',
+                    width: 82,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Resultante',
+                    dataIndex: 'custoResultante',
+                    width: 90,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Ano Ant.',
+                    dataIndex: 'custoUltAnoAnterior',
+                    width: 80,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. Ano Ant.',
+                    dataIndex: 'custoMedanoAnterior',
+                    width: 120,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. Emerg. Ano Ant.',
+                    dataIndex: 'custoMedEAnoAnterior',
+                    width: 156,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. 12 Mes. Ano Ant.',
+                    dataIndex: 'custoMedE_12mAnterior',
+                    width: 158,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. 6 Mes. Ano Ant.',
+                    dataIndex: 'custoMedE_6mAnterior',
+                    width: 156,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. 3 Mes. Ano Ant.',
+                    dataIndex: 'custoMedE_3mAnterior',
+                    width: 156,
+                    renderer: function (v) {
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                }
+            ]
         },
         {
-            text: 'Custo Operação',
-            dataIndex: 'custoOperacao',
-            width: 130
-        },
-        {
-            text: 'Custo Resultante',
-            dataIndex: 'custoResultante',
-            width: 130
-        },
-        {
-            text: 'Var. Custo Ant.',
-            dataIndex: 'varCustoOperAnterior',
-            width: 120
-        },
+            text: 'Variação',
+            columns:[
+                {
+                    text: 'Anterior',
+                    dataIndex: 'vOpeAnterior',
+                    width: 80,
+                    renderer: function (v, metaData, record) {
+
+                        var idStatus = record.get('vOpeAnterior');
+                        if (idStatus < 0)
+                            metaData.tdCls = 'x-grid-cell-green-border';
+
+                        if (idStatus > 0)
+                            metaData.tdCls = 'x-grid-cell-red-border'; 
+
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Ano Ant.',
+                    dataIndex: 'vOpeUltAnoAnterior',
+                    width: 80,
+                    renderer: function (v, metaData, record) {
+                        var idStatus = record.get('vOpeUltAnoAnterior');
+                        if (idStatus < 0)
+                            metaData.tdCls = 'x-grid-cell-green-border';
+
+                        if (idStatus > 0)
+                            metaData.tdCls = 'x-grid-cell-red-border';
+
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. Ano Ant.',
+                    dataIndex: 'vOpeMedAnoAnterior',
+                    width: 120,
+                    renderer: function (v, metaData, record) {
+                        var idStatus = record.get('vOpeMedAnoAnterior');
+                        if (idStatus < 0)
+                            metaData.tdCls = 'x-grid-cell-green-border';
+
+                        if (idStatus > 0)
+                            metaData.tdCls = 'x-grid-cell-red-border';
+                            
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. Emerg. Ano Ant.',
+                    dataIndex: 'vOpeMedEAnoAnterior',
+                    width: 156,
+                    renderer: function (v, metaData, record) {
+                        var idStatus = record.get('vOpeMedEAnoAnterior');
+                        if (idStatus < 0)
+                            metaData.tdCls = 'x-grid-cell-green-border';
+
+                        if (idStatus > 0)
+                            metaData.tdCls = 'x-grid-cell-red-border';
+                            
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. 12 Mes. Ano Ant.',
+                    dataIndex: 'vOpeMedE_12mAnterior',
+                    width: 158,
+                    renderer: function (v, metaData, record) {
+                        var idStatus = record.get('vOpeMedE_12mAnterior');
+                        if (idStatus < 0)
+                            metaData.tdCls = 'x-grid-cell-green-border';
+
+                        if (idStatus > 0)
+                            metaData.tdCls = 'x-grid-cell-red-border';
+                            
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. 6 Mes. Ano Ant.',
+                    dataIndex: 'vOpeMedE_6mAnterior',
+                    width: 156,
+                    renderer: function (v, metaData, record) {
+                        var idStatus = record.get('vOpeMedE_6mAnterior');
+                        if (idStatus < 0)
+                            metaData.tdCls = 'x-grid-cell-green-border';
+
+                        if (idStatus > 0)
+                            metaData.tdCls = 'x-grid-cell-red-border';
+                            
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                },
+                {
+                    text: 'Med. 3 Mes. Ano Ant.',
+                    dataIndex: 'vOpeMedE_3mAnterior',
+                    width: 156,
+                    renderer: function (v, metaData, record) {
+                        var idStatus = record.get('vOpeMedE_3mAnterior');
+                        if (idStatus < 0)
+                            metaData.tdCls = 'x-grid-cell-green-border';
+
+                        if (idStatus > 0)
+                            metaData.tdCls = 'x-grid-cell-red-border';
+                            
+                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        return utilFormat.Value(v);
+                    }
+                }
+            ]
+        }
+        ,
         {
             text: 'Qt. Anterior',
-            120: 'qtdeAnterior',
-            width: 74
+            dataIndex: 'qtdeAnterior',
+            width: 100
         },
         {
             text: 'Qt. Operação',
             dataIndex: 'qtdeOperacao',
-            width: 120
+            width: 110
         },
         {
             text: 'Qt. Resultante',
             dataIndex: 'qtdeResultante',
-            width: 120
+            width: 110
         }
     ],
     features: [

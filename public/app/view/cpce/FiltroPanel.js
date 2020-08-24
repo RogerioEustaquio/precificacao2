@@ -46,7 +46,6 @@ Ext.define('App.view.cpce.FiltroPanel', {
 
         Ext.applyIf(me, {
 
-
             items:[
                 {
                     xtype: 'panel',

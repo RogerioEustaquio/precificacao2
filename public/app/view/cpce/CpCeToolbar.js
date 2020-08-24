@@ -105,8 +105,7 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                 var nrnota = me.down('#nrnota').getRawValue();
 
                 var itemgrid = me.up('container').down('#container1').down('#pprincipal').down('#itemgridpanel').down('grid');
-                var marcagrid = me.up('container').down('#container1').down('#pprincipal').down('#filtroPanel').down('#pmarcagrid').down('grid');
-                
+       
                 var pfiltro = me.up('container').down('#filtroPanel');
                 var gridmarca = pfiltro.down('#pmarcagrid').down('grid');
 
@@ -134,7 +133,6 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                 var pvaria3mes = pform.down('#varia3mes').getValue();
                 var pvaria6mes = pform.down('#varia6mes').getValue();
                 var pvaria12mes = pform.down('#varia12mes').getValue();
-
 
                 var params = {
                     emp: emp,
@@ -182,7 +180,6 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                 }else{
                     panelFilter.setHidden(true);
                 }
-                // console.log('Click Consulta');
 
             }
         });

@@ -269,6 +269,7 @@ class CpCeController extends AbstractRestfulController
             $usuario = $session['info'];
 
             $andSql = '';
+            $andSqlVar = '';
             if($emp  && $emp != "EC"){
                 $andSql = " and em.apelido = '$emp'";
             }
@@ -301,87 +302,141 @@ class CpCeController extends AbstractRestfulController
                 $andSql .= " and i.cod_item||ca.descricao =  '$produto'";
             }
 
-            if($marca){
-                $andSql .= " and m.id_marca in ($marca)";
-            }
-
             if($curva){
                 $andSql .= " and e.id_curva_abc = '$curva'";
             }
 
             if($variaUltentrada){
-                $andSql .= " and round(k.custo_anterior,2) >= $variaUltentrada";
+                $andSqlVar = " and (case when custo_anterior > 0 then round(((custo_operacao/custo_anterior)-1)*100,2) end) >= $variaUltentrada";
             }
 
             if($variaUltcusto){
-                $andSql .= " and round(k.custo_operacao,2) >= $variaUltcusto";
+                $andSqlVar .= " and (case when custo_ult_ano_anterior > 0 then round(((custo_operacao/custo_ult_ano_anterior)-1)*100,2) end) >= $variaUltcusto";
+            }
+
+            if($variaCustomedio){
+                $andSqlVar .= " and (case when custo_med_ano_anterior > 0 then round(((custo_operacao/custo_med_ano_anterior)-1)*100,2) end) >= $variaCustomedio";
+            }
+
+            if($variaEmergmedio){
+                $andSqlVar .= " and (case when custo_med_e_ano_anterior > 0 then round(((custo_operacao/custo_med_e_ano_anterior)-1)*100,2) end) >= $variaEmergmedio";
+            }
+
+            if($varia3mes){
+                $andSqlVar .= " and (case when custo_med_e_3m_anterior > 0 then round(((custo_operacao/custo_med_e_3m_anterior)-1)*100,2) end) >= $varia3mes";
+            }
+            if($varia6mes){
+                $andSqlVar .= " and (case when custo_med_e_6m_anterior > 0 then round(((custo_operacao/custo_med_e_6m_anterior)-1)*100,2) end) >= $varia6mes";
+            }
+            if($varia12mes){
+                $andSqlVar .= " and (case when custo_med_e_12m_anterior > 0 then round(((custo_operacao/custo_med_e_12m_anterior)-1)*100,2) end) >= $varia12mes";
+            }
+
+            if(!$andSql){
+                $andSql = "and trunc(c.data_emissao) >= sysdate-30";
             }
 
             $em = $this->getEntityManager();
             $conn = $em->getConnection();
             
-            $sql = "select  em.apelido as emp,
-                            c.id_operacao,
-                            os.descricao as operacao,
-                            trunc(c.data_emissao) as data_emissao,
-                            trunc(c.data_entrada) as data_entrada,
-                            c.id_pessoa as cnpj,
-                            p.nome as nome,
-                            c.numero_nota||'-'||c.serie_nota as numero_nota,
-                            c.tot_nota as valor_nota,
-                            m.descricao as marca,
-                            i.cod_item||ca.descricao as cod_item,
-                            i.descricao,
-                            k.data_compra_anterior,
-                            round(k.custo_anterior,2) as custo_anterior,
-                            round(k.custo_operacao,2) as custo_operacao,
-                            round(k.custo_resultante,2) as custo_resultante,
-                            (case when k.custo_anterior > 0 then round(((k.custo_operacao/k.custo_anterior)-1)*100,2) end) as var_custo_ope_anterior,
-                            k.qtde_anterior, k.qtde_operacao, k.qtde_resultante,
-                            e.id_curva_abc
-                    from ms.cp_compra c,
-                         ms.cp_compra_item ci,
-                        (select id_empresa, id_cardex_item, id_item, id_categoria, 
-                                custo_anterior, custo_operacao, custo_resultante,
-                                qtde_anterior_estoque as qtde_anterior, qtde_operacao_estoque as qtde_operacao, qtde_saldo_estoque as qtde_resultante,
-                                trunc((select max(data_created) 
+            $sql = "select emp,
+                            id_operacao,
+                            operacao,
+                            data_emissao,
+                            data_entrada,
+                            cnpj,
+                            nome,
+                            numero_nota,
+                            valor_nota,
+                            marca,
+                            cod_item,
+                            descricao,
+                            data_compra_anterior,
+                            custo_anterior,
+                            custo_operacao,
+                            custo_resultante,
+                            (case when custo_anterior > 0 then round(((custo_operacao/custo_anterior)-1)*100,2) end) as v_ope_anterior,
+                            qtde_anterior, qtde_operacao, qtde_resultante,
+                            custo_ult_ano_anterior,
+                            (case when custo_ult_ano_anterior > 0 then round(((custo_operacao/custo_ult_ano_anterior)-1)*100,2) end) as v_ope_ult_ano_anterior,
+                            custo_med_ano_anterior,
+                            (case when custo_med_ano_anterior > 0 then round(((custo_operacao/custo_med_ano_anterior)-1)*100,2) end) as v_ope_med_ano_anterior,
+                            custo_med_e_ano_anterior,
+                            (case when custo_med_e_ano_anterior > 0 then round(((custo_operacao/custo_med_e_ano_anterior)-1)*100,2) end) as v_ope_med_e_ano_anterior,
+                            custo_med_e_12m_anterior,
+                            (case when custo_med_e_12m_anterior > 0 then round(((custo_operacao/custo_med_e_12m_anterior)-1)*100,2) end) as v_ope_med_e_12m_anterior,
+                            custo_med_e_6m_anterior,
+                            (case when custo_med_e_6m_anterior > 0 then round(((custo_operacao/custo_med_e_6m_anterior)-1)*100,2) end) as v_ope_med_e_6m_anterior,
+                            custo_med_e_3m_anterior,
+                            (case when custo_med_e_3m_anterior > 0 then round(((custo_operacao/custo_med_e_3m_anterior)-1)*100,2) end) as v_ope_med_e_3m_anterior
+                                
+                    from (
+                        select em.apelido as emp,
+                                c.id_operacao,
+                                os.descricao as operacao,
+                                trunc(c.data_emissao) as data_emissao,
+                                trunc(c.data_entrada) as data_entrada,
+                                c.id_pessoa as cnpj,
+                                p.nome as nome,
+                                c.numero_nota||'-'||c.serie_nota as numero_nota,
+                                c.tot_nota as valor_nota,
+                                m.descricao as marca,
+                                i.cod_item||ca.descricao as cod_item,
+                                i.descricao,
+                                k.data_compra_anterior,
+                                round(k.custo_anterior,2) as custo_anterior,
+                                round(k.custo_operacao,2) as custo_operacao,
+                                round(k.custo_resultante,2) as custo_resultante,
+                                k.qtde_anterior, k.qtde_operacao, k.qtde_resultante,
+                                pkg_help_variacao_custo.get_custo_ult_ano_ant(ci.id_empresa, ci.id_item, ci.id_categoria, ci.id_cardex_item) as custo_ult_ano_anterior,
+                                pkg_help_variacao_custo.get_custo_med_ano_ant(ci.id_empresa, ci.id_item, ci.id_categoria, ci.id_cardex_item) as custo_med_ano_anterior,
+                                pkg_help_variacao_custo.get_custo_med_e_ano_ant(ci.id_empresa, ci.id_item, ci.id_categoria, ci.id_cardex_item) as custo_med_e_ano_anterior,
+                                pkg_help_variacao_custo.get_custo_med_e_12m_ant(ci.id_empresa, ci.id_item, ci.id_categoria, ci.id_cardex_item) as custo_med_e_12m_anterior,
+                                pkg_help_variacao_custo.get_custo_med_e_6m_ant(ci.id_empresa, ci.id_item, ci.id_categoria, ci.id_cardex_item) as custo_med_e_6m_anterior,
+                                pkg_help_variacao_custo.get_custo_med_e_3m_ant(ci.id_empresa, ci.id_item, ci.id_categoria, ci.id_cardex_item) as custo_med_e_3m_anterior
+                                
+                            from ms.cp_compra c,
+                                ms.cp_compra_item ci,
+                                (select id_empresa, id_cardex_item, id_item, id_categoria, 
+                                        custo_anterior, custo_operacao, custo_resultante,
+                                        qtde_anterior_estoque as qtde_anterior, qtde_operacao_estoque as qtde_operacao, qtde_saldo_estoque as qtde_resultante,
+                                        trunc((select max(data_created) 
                                             from ms.cardex_item 
-                                        where id_empresa = x.id_empresa 
-                                        and id_item = x.id_item 
-                                        and id_categoria = x.id_categoria
-                                        and id_operacao = 1
-                                        and id_cardex_item < x.id_cardex_item)) as data_compra_anterior
-                            from ms.cardex_item x
-                        where status = 'A') k,
-                        ms.pessoa p,
-                        ms.empresa em,
-                        ms.tb_item_categoria ic,
-                        ms.tb_marca m,
-                        ms.tb_item i,
-                        ms.tb_categoria ca,
-                        ms.ms_operacao_sistema os,
-                        ms.tb_estoque e
-                    where c.id_empresa = ci.id_empresa
-                    and c.id_compra = ci.id_compra
-                    and ci.id_empresa = k.id_empresa
-                    and ci.id_cardex_item = k.id_cardex_item
-                    and c.id_pessoa = p.id_pessoa
-                    and c.id_empresa = em.id_empresa
-                    and ci.id_item = ic.id_item 
-                    and ci.id_categoria = ic.id_categoria
-                    and ic.id_marca = m.id_marca
-                    and ci.id_item = i.id_item
-                    and ci.id_categoria = ca.id_categoria
-                    and c.id_operacao = os.id_operacao
-                    and c.id_operacao not in (10 /*Devolução de Venda*/, 45/*Entrada para analise de garantia*/, 14 /*Entrada Item em Transferencia*/, 50 /*Entrada para Reclassificac?o*/)
-                    and m.descricao not in ('EMERGENCIAL')
-                    and trunc(c.data_emissao) >= '01/02/2020'
-                    and c.id_empresa = e.id_empresa
-                    and ci.id_item = e.id_item
-                    and ci.id_categoria = e.id_categoria
-                    $andSql
-                    and rownum <= 100
-                    order by em.apelido
+                                            where id_empresa = x.id_empresa 
+                                            and id_item = x.id_item 
+                                            and id_categoria = x.id_categoria
+                                            and id_operacao = 1
+                                            and status = 'A'
+                                            and id_cardex_item < x.id_cardex_item)) as data_compra_anterior
+                                    from ms.cardex_item x
+                                    where status = 'A') k,
+                                ms.pessoa p,
+                                ms.empresa em,
+                                ms.tb_item_categoria ic,
+                                ms.tb_marca m,
+                                ms.tb_item i,
+                                ms.tb_categoria ca,
+                                ms.ms_operacao_sistema os
+                            where c.id_empresa = ci.id_empresa
+                            and c.id_compra = ci.id_compra
+                            and ci.id_empresa = k.id_empresa
+                            and ci.id_cardex_item = k.id_cardex_item
+                            and c.id_pessoa = p.id_pessoa
+                            and c.id_empresa = em.id_empresa
+                            and ci.id_item = ic.id_item 
+                            and ci.id_categoria = ic.id_categoria
+                            and ic.id_marca = m.id_marca
+                            and ci.id_item = i.id_item
+                            and ci.id_categoria = ca.id_categoria
+                            and c.id_operacao = os.id_operacao
+                            and c.id_operacao not in (10 /*Devolução de Venda*/, 45/*Entrada para analise de garantia*/, 14 /*Entrada Item em Transferencia*/, 50 /*Entrada para Reclassificac?o*/)
+                            and m.descricao not in ('EMERGENCIAL')
+                            $andSql
+                            and trunc(c.data_emissao) >= '01/01/2020'
+                            --and rownum < 100
+                    )
+                where emp is not null
+                $andSqlVar
             ";
 
             $sql1 = "select count(*) as totalCount from ($sql)";
@@ -402,6 +457,23 @@ class CpCeController extends AbstractRestfulController
 
             $hydrator = new ObjectProperty;
             $hydrator->addStrategy('valor_nota', new ValueStrategy);
+            $hydrator->addStrategy('custo_anterior', new ValueStrategy);
+            $hydrator->addStrategy('custo_operacao', new ValueStrategy);
+            $hydrator->addStrategy('custo_resultante', new ValueStrategy);
+            $hydrator->addStrategy('var_custo_ope_anterior', new ValueStrategy);
+            $hydrator->addStrategy('custo_ult_ano_anterior', new ValueStrategy);
+            $hydrator->addStrategy('custo_med_ano_anterior', new ValueStrategy);
+            $hydrator->addStrategy('custo_med_e_ano_anterior', new ValueStrategy);
+            $hydrator->addStrategy('custo_med_e_12m_anterior', new ValueStrategy);
+            $hydrator->addStrategy('custo_med_e_6m_anterior', new ValueStrategy);
+            $hydrator->addStrategy('custo_med_e_3m_anterior', new ValueStrategy);
+
+            $hydrator->addStrategy('v_ope_ult_ano_anterior', new ValueStrategy);
+            $hydrator->addStrategy('v_ope_med_ano_anterior', new ValueStrategy);
+            $hydrator->addStrategy('v_ope_med_e_ano_anterior', new ValueStrategy);
+            $hydrator->addStrategy('v_ope_med_e_12m_anterior', new ValueStrategy);
+            $hydrator->addStrategy('v_ope_med_e_6m_anterior', new ValueStrategy);
+            $hydrator->addStrategy('v_ope_med_e_3m_anterior', new ValueStrategy);
             $stdClass = new StdClass;
             $resultSet = new HydratingResultSet($hydrator, $stdClass);
             $resultSet->initialize($results);
