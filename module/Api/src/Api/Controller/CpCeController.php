@@ -307,29 +307,36 @@ class CpCeController extends AbstractRestfulController
             }
 
             if($variaUltentrada){
-                $andSqlVar = " and (case when custo_anterior > 0 then round(((custo_operacao/custo_anterior)-1)*100,2) end) >= $variaUltentrada";
+                $sqlCond = ($variaUltentrada < 0 ? '<=' : '>=' );
+                $andSqlVar = " and (case when custo_anterior > 0 then round(((custo_operacao/custo_anterior)-1)*100,2) end) $sqlCond $variaUltentrada";
             }
 
             if($variaUltcusto){
-                $andSqlVar .= " and (case when custo_ult_ano_anterior > 0 then round(((custo_operacao/custo_ult_ano_anterior)-1)*100,2) end) >= $variaUltcusto";
+                $sqlCond = ($variaUltcusto < 0 ? '<=' : '>=' );
+                $andSqlVar .= " and (case when custo_ult_ano_anterior > 0 then round(((custo_operacao/custo_ult_ano_anterior)-1)*100,2) end) $sqlCond $variaUltcusto";
             }
 
             if($variaCustomedio){
-                $andSqlVar .= " and (case when custo_med_ano_anterior > 0 then round(((custo_operacao/custo_med_ano_anterior)-1)*100,2) end) >= $variaCustomedio";
+                $sqlCond = ($variaCustomedio < 0 ? '<=' : '>=' );
+                $andSqlVar .= " and (case when custo_med_ano_anterior > 0 then round(((custo_operacao/custo_med_ano_anterior)-1)*100,2) end) $sqlCond $variaCustomedio";
             }
 
             if($variaEmergmedio){
-                $andSqlVar .= " and (case when custo_med_e_ano_anterior > 0 then round(((custo_operacao/custo_med_e_ano_anterior)-1)*100,2) end) >= $variaEmergmedio";
+                $sqlCond = ($variaEmergmedio < 0 ? '<=' : '>=' );
+                $andSqlVar .= " and (case when custo_med_e_ano_anterior > 0 then round(((custo_operacao/custo_med_e_ano_anterior)-1)*100,2) end) $sqlCond $variaEmergmedio";
             }
 
             if($varia3mes){
-                $andSqlVar .= " and (case when custo_med_e_3m_anterior > 0 then round(((custo_operacao/custo_med_e_3m_anterior)-1)*100,2) end) >= $varia3mes";
+                $sqlCond = ($varia3mes < 0 ? '<=' : '>=' );
+                $andSqlVar .= " and (case when custo_med_e_3m_anterior > 0 then round(((custo_operacao/custo_med_e_3m_anterior)-1)*100,2) end) $sqlCond $varia3mes";
             }
             if($varia6mes){
-                $andSqlVar .= " and (case when custo_med_e_6m_anterior > 0 then round(((custo_operacao/custo_med_e_6m_anterior)-1)*100,2) end) >= $varia6mes";
+                $sqlCond = ($varia6mes < 0 ? '<=' : '>=' );
+                $andSqlVar .= " and (case when custo_med_e_6m_anterior > 0 then round(((custo_operacao/custo_med_e_6m_anterior)-1)*100,2) end) $sqlCond $varia6mes";
             }
             if($varia12mes){
-                $andSqlVar .= " and (case when custo_med_e_12m_anterior > 0 then round(((custo_operacao/custo_med_e_12m_anterior)-1)*100,2) end) >= $varia12mes";
+                $sqlCond = ($varia12mes < 0 ? '<=' : '>=' );
+                $andSqlVar .= " and (case when custo_med_e_12m_anterior > 0 then round(((custo_operacao/custo_med_e_12m_anterior)-1)*100,2) end) $sqlCond $varia12mes";
             }
 
             if(!$andSql){
@@ -467,7 +474,7 @@ class CpCeController extends AbstractRestfulController
             $hydrator->addStrategy('custo_med_e_12m_anterior', new ValueStrategy);
             $hydrator->addStrategy('custo_med_e_6m_anterior', new ValueStrategy);
             $hydrator->addStrategy('custo_med_e_3m_anterior', new ValueStrategy);
-
+            $hydrator->addStrategy('v_ope_anterior', new ValueStrategy);
             $hydrator->addStrategy('v_ope_ult_ano_anterior', new ValueStrategy);
             $hydrator->addStrategy('v_ope_med_ano_anterior', new ValueStrategy);
             $hydrator->addStrategy('v_ope_med_e_ano_anterior', new ValueStrategy);

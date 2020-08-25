@@ -144,7 +144,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 80,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -153,7 +154,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 82,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -162,7 +164,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 90,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -171,7 +174,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 80,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -180,7 +184,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 120,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -189,7 +194,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 156,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -198,7 +204,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 158,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -207,7 +214,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 156,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -216,7 +224,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                     width: 156,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 }
             ]
@@ -238,7 +247,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border'; 
 
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -254,7 +264,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
 
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -270,7 +281,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -286,7 +298,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -302,7 +315,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -318,7 +332,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 },
                 {
@@ -334,7 +349,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        return utilFormat.Value(v);
+                        v = (v ? utilFormat.Value(v) : null);
+                        return v;
                     }
                 }
             ]
