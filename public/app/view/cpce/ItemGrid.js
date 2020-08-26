@@ -247,7 +247,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border'; 
 
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        v = (v ? utilFormat.Value(v) : null);
+                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     }
                 },
@@ -264,7 +264,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
 
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        v = (v ? utilFormat.Value(v) : null);
+                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     }
                 },
@@ -281,7 +281,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        v = (v ? utilFormat.Value(v) : null);
+                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     }
                 },
@@ -298,7 +298,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        v = (v ? utilFormat.Value(v) : null);
+                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     }
                 },
@@ -315,7 +315,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        v = (v ? utilFormat.Value(v) : null);
+                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     }
                 },
@@ -332,7 +332,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        v = (v ? utilFormat.Value(v) : null);
+                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     }
                 },
@@ -349,7 +349,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
                             
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        v = (v ? utilFormat.Value(v) : null);
+                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     }
                 }

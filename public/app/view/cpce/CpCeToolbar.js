@@ -122,17 +122,18 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                     }
                 }
 
-                var pform = pfiltro.down('#pform').down('form');
-                var produto = pform.down('#bxproduto').getValue();
-                var pcurva  = pform.down('#curva').getValue();
-                var pfaixacli = pform.down('#faixacli').getValue();
+                var pform            = pfiltro.down('#pform').down('form');
+                var produto          = pform.down('#bxproduto').getValue();
+                var pcurva           = pform.down('#curva').getValue();
+                var pfaixacli        = pform.down('#faixacli').getValue();
+                var pfaixacusto      = pform.down('#faixacusto').getValue();
                 var pvariaUltentrada = pform.down('#variaUltentrada').getValue();
-                var pvariaUltcusto = pform.down('#variaUltcusto').getValue();
+                var pvariaUltcusto   = pform.down('#variaUltcusto').getValue();
                 var pvariaCustomedio = pform.down('#variaCustomedio').getValue();
                 var pvariaEmergmedio = pform.down('#variaEmergmedio').getValue();
-                var pvaria3mes = pform.down('#varia3mes').getValue();
-                var pvaria6mes = pform.down('#varia6mes').getValue();
-                var pvaria12mes = pform.down('#varia12mes').getValue();
+                var pvaria3mes       = pform.down('#varia3mes').getValue();
+                var pvaria6mes       = pform.down('#varia6mes').getValue();
+                var pvaria12mes      = pform.down('#varia12mes').getValue();
 
                 var params = {
                     emp: emp,
@@ -144,6 +145,7 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                     produto: produto,
                     curva: pcurva,
                     faixacli: pfaixacli,
+                    faixacusto: pfaixacusto,
                     variaUltentrada: pvariaUltentrada,
                     variaUltcusto: pvariaUltcusto,
                     variaCustomedio: pvariaCustomedio,

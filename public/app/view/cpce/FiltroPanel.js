@@ -135,8 +135,8 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             xtype: 'combobox',
                                             name: 'faixacli',
                                             id: 'faixacli',
-                                            emptyText: 'Faixa',
-                                            width: 100,
+                                            emptyText: 'Faixa Cliente',
+                                            width: 120,
                                             margin: '6 2 2 2',
                                             store: Ext.create('Ext.data.Store', {
                                                         fields: ['faixacli', 'name'],
@@ -156,7 +156,54 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                             xtype: 'button',
                                             iconCls: 'fa fa-file',
                                             tooltip: 'Limpar',
-                                            margin: '6 2 2 42',
+                                            margin: '6 2 2 22',
+                                            handler: function(form) {
+                                                var objValor = form.up('fieldset').down('combobox');
+                                                objValor.setSelection(null);
+                                            }
+                                        }
+                                    ]
+                                },
+                                ,
+                                {
+                                    xtype: 'fieldset',
+                                    title: 'Faixa de Custo',
+                                    id: 'ffaixacusto',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'middle'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'combobox',
+                                            name: 'faixacusto',
+                                            id: 'faixacusto',
+                                            emptyText: 'Faixa Custo',
+                                            width: 120,
+                                            margin: '6 2 2 2',
+                                            store: Ext.create('Ext.data.Store', {
+                                                        fields: [{ name: 'fxCusto' }],
+                                                        proxy: {
+                                                            type: 'ajax',
+                                                            url: BASEURL + '/api/CpCe/listarfaixacusto',
+                                                            timeout: 120000,
+                                                            reader: {
+                                                                type: 'json',
+                                                                root: 'data'
+                                                            }
+                                                        },
+                                                        autoLoad: true
+                                            }),
+                                            queryParam: 'fxCusto',
+                                            queryMode: 'local',
+                                            displayField: 'fxCusto',
+                                            valueField: 'fxCusto'
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            iconCls: 'fa fa-file',
+                                            tooltip: 'Limpar',
+                                            margin: '6 2 2 22',
                                             handler: function(form) {
                                                 var objValor = form.up('fieldset').down('combobox');
                                                 objValor.setSelection(null);
