@@ -272,7 +272,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     id: 'fvariaCustomedio',
-                                    title: '% Variação x custo médio ano anterior',
+                                    title: '% Variação x Custo médio ano anterior',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'
@@ -301,7 +301,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     id: 'fvariaEmergmedio',
-                                    title: '% Variação x emergencial médio ano anterior',
+                                    title: '% Variação x Custo médio emerg. ano anterior',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'
@@ -330,7 +330,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     id: 'fvaria3mes',
-                                    title: '% Variação x emergencial últimos 3 meses ',
+                                    title: '% Variação x Custo médio 3 meses anterior',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'
@@ -359,7 +359,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     id: 'fvaria6mes',
-                                    title: '% Variação x emergencial últimos 6 meses ',
+                                    title: '% Variação x Custo médio 6 meses anterior',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'
@@ -388,7 +388,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     id: 'fvaria12mes',
-                                    title: '% Variação x emergencial últimos 12 meses ',
+                                    title: '% Variação x Custo médio 12 meses anterior',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'

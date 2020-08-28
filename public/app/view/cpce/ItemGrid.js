@@ -179,7 +179,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. Ano Ant.',
+                    text: 'Méd. Ano Ant.',
                     dataIndex: 'custoMedanoAnterior',
                     width: 120,
                     renderer: function (v) {
@@ -189,7 +189,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. Emerg. Ano Ant.',
+                    text: 'Méd. Emerg. Ano Ant.',
                     dataIndex: 'custoMedEAnoAnterior',
                     width: 156,
                     renderer: function (v) {
@@ -199,9 +199,9 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. 12 Mes. Ano Ant.',
+                    text: 'Méd. 12 Meses Ant.',
                     dataIndex: 'custoMedE_12mAnterior',
-                    width: 158,
+                    width: 142,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -209,9 +209,9 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. 6 Mes. Ano Ant.',
+                    text: 'Méd. 6 Meses Ant.',
                     dataIndex: 'custoMedE_6mAnterior',
-                    width: 156,
+                    width: 136,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -219,9 +219,9 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. 3 Mes. Ano Ant.',
+                    text: 'Méd. 3 Meses Ant.',
                     dataIndex: 'custoMedE_3mAnterior',
-                    width: 156,
+                    width: 136,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -244,7 +244,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-green-border';
 
                         if (idStatus > 0)
-                            metaData.tdCls = 'x-grid-cell-red-border'; 
+                            metaData.tdCls = 'x-grid-cell-red-border';
 
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
@@ -269,7 +269,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. Ano Ant.',
+                    text: 'Méd. Ano Ant.',
                     dataIndex: 'vOpeMedAnoAnterior',
                     width: 120,
                     renderer: function (v, metaData, record) {
@@ -286,7 +286,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. Emerg. Ano Ant.',
+                    text: 'Méd. Emerg. Ano Ant.',
                     dataIndex: 'vOpeMedEAnoAnterior',
                     width: 156,
                     renderer: function (v, metaData, record) {
@@ -303,9 +303,9 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. 12 Mes. Ano Ant.',
+                    text: 'Méd. 12 Meses Ant.',
                     dataIndex: 'vOpeMedE_12mAnterior',
-                    width: 158,
+                    width: 142,
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedE_12mAnterior');
                         if (idStatus < 0)
@@ -320,9 +320,9 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. 6 Mes. Ano Ant.',
+                    text: 'Méd. 6 Meses Ant.',
                     dataIndex: 'vOpeMedE_6mAnterior',
-                    width: 156,
+                    width: 136,
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedE_6mAnterior');
                         if (idStatus < 0)
@@ -337,9 +337,9 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Med. 3 Mes. Ano Ant.',
+                    text: 'Méd. 3 Meses Ant.',
                     dataIndex: 'vOpeMedE_3mAnterior',
-                    width: 156,
+                    width: 136,
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedE_3mAnterior');
                         if (idStatus < 0)

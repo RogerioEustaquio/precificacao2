@@ -431,6 +431,7 @@ class CpCeController extends AbstractRestfulController
                             marca,
                             cod_item,
                             descricao,
+                            id_curva_abc,
                             fx_custo,
                             data_compra_anterior,
                             custo_anterior,
@@ -463,6 +464,7 @@ class CpCeController extends AbstractRestfulController
                                 m.descricao as marca,
                                 i.cod_item||ca.descricao as cod_item,
                                 i.descricao,
+                                e.id_curva_abc,
                                 (case when e.custo_contabil < 1 then '0'
                                     when e.custo_contabil >= 1 and e.custo_contabil < 6  then '1-5'
                                     when e.custo_contabil >= 6 and e.custo_contabil < 11  then '6-10'
