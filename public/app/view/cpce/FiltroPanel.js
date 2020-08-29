@@ -301,7 +301,7 @@ Ext.define('App.view.cpce.FiltroPanel', {
                                 {
                                     xtype: 'fieldset',
                                     id: 'fvariaEmergmedio',
-                                    title: '% Variação x Custo médio emerg. ano anterior',
+                                    title: '% Variação x Custo médio .P ano anterior',
                                     layout: {
                                         type: 'hbox',
                                         align: 'middle'

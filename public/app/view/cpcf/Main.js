@@ -5,7 +5,7 @@ Ext.define('App.view.cpcf.Main', {
     itemId: 'cpcfmain',
     requires: [
     ],
-    title: 'Comparativo custo fábrica',
+    title: 'Comparativo Custo Fábrica',
     layout: 'border',
 
     constructor: function() {
@@ -22,9 +22,49 @@ Ext.define('App.view.cpcf.Main', {
                 },
                 {
                     xtype: 'container',
-                    id: 'containergrids2',
+                    id: 'container1f',
+                    idItem: 'container1f',
                     region: 'center',
-                    layout: 'fit'
+                    layout: {
+                        type: 'hbox'
+                    },
+                    defaults:{
+                        border: false,
+                        margin: '1 1 1 1',
+                        height : '100%',
+                    },
+                    items:[
+                        {
+                            xtype: 'panel',
+                            id: 'pprincipalf',
+                            idItem: 'pprincipalf',
+                            layout: 'hbox',
+                            width: '100%',
+                            defaults:{
+                                border: false,
+                                margin: '1 1 1 1',
+                                height : '100%',
+                            },
+                            items:[
+                                {
+                                    xtype: 'filtroPanelf',
+                                    hidden: true
+                                },
+                                {
+                                    xtype:'panel',
+                                    id: 'itemgridpanelf',
+                                    idItem: 'itemgridpanelf',
+                                    layout: 'fit',
+                                    flex: 1,
+                                    items: [
+                                        {
+                                            xtype: 'ItemGridf'
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
 

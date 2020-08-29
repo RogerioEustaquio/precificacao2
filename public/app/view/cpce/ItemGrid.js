@@ -27,6 +27,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                                     {name:'marca',mapping:'marca'},
                                     {name:'codItem',mapping:'codItem'},
                                     {name:'descricao',mapping:'descricao'},
+                                    {name:'idCurvaAbc',mapping:'idCurvaAbc'},
                                     {name:'dataCompraAnterior',mapping:'dataCompraAnterior'},
                                     {name:'custoAnterior',mapping:'custoAnterior', type: 'number'},
                                     {name:'custoOperacao',mapping:'custoOperacao', type: 'number'},
@@ -51,7 +52,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                                     ]
                 }),
                 pageSize: 50,
-                autoLoad: true,
+                autoLoad: false,
                 proxy: {
                     type: 'ajax',
                     method:'POST',
@@ -79,12 +80,12 @@ Ext.define('App.view.cpce.ItemGrid', {
             
         },
         {
-            text: 'Dt. Emissão',
+            text: 'Data <br> Emissão',
             dataIndex: 'dataEmissao',
             width: 100
         },
         {
-            text: 'Dt. Entrada',
+            text: 'Data <br> Entrada',
             dataIndex: 'dataEntrada',
             width: 110
         },
@@ -107,7 +108,8 @@ Ext.define('App.view.cpce.ItemGrid', {
         {
             text: 'Valor Nota',
             dataIndex: 'valorNota',
-            width: 100,          
+            width: 100,
+            hidden: true,
             renderer: function (v) {
                 var utilFormat = Ext.create('Ext.ux.util.Format');
                 return utilFormat.Value(v);
@@ -131,7 +133,12 @@ Ext.define('App.view.cpce.ItemGrid', {
             flex:1
         },
         {
-            text: 'Dt. Compra Ant.',
+            text: 'Curva',
+            dataIndex: 'idCurvaAbc',
+            width: 60
+        },
+        {
+            text: 'Data Compra  <br> Anterior',
             dataIndex: 'dataCompraAnterior',
             width: 120
         },
@@ -169,7 +176,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Ano Ant.',
+                    text: 'Ano <br> Anterior',
                     dataIndex: 'custoUltAnoAnterior',
                     width: 80,
                     renderer: function (v) {
@@ -179,7 +186,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. Ano Ant.',
+                    text: 'Média Ano <br> Anterior',
                     dataIndex: 'custoMedanoAnterior',
                     width: 120,
                     renderer: function (v) {
@@ -189,9 +196,9 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. Emerg. Ano Ant.',
+                    text: 'Média .P <br> Ano Anterior',
                     dataIndex: 'custoMedEAnoAnterior',
-                    width: 156,
+                    width: 120,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -199,7 +206,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. 12 Meses Ant.',
+                    text: 'Média 12 Meses <br> Anterior',
                     dataIndex: 'custoMedE_12mAnterior',
                     width: 142,
                     renderer: function (v) {
@@ -209,7 +216,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. 6 Meses Ant.',
+                    text: 'Média 6 Meses <br> Anterior',
                     dataIndex: 'custoMedE_6mAnterior',
                     width: 136,
                     renderer: function (v) {
@@ -219,7 +226,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. 3 Meses Ant.',
+                    text: 'Média 3 Meses <br> Anterior',
                     dataIndex: 'custoMedE_3mAnterior',
                     width: 136,
                     renderer: function (v) {
@@ -252,7 +259,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Ano Ant.',
+                    text: 'Ano <br> Anterior',
                     dataIndex: 'vOpeUltAnoAnterior',
                     width: 80,
                     renderer: function (v, metaData, record) {
@@ -269,7 +276,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. Ano Ant.',
+                    text: 'Média Ano <br> Anterior',
                     dataIndex: 'vOpeMedAnoAnterior',
                     width: 120,
                     renderer: function (v, metaData, record) {
@@ -286,9 +293,9 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. Emerg. Ano Ant.',
+                    text: 'Média .P <br> Ano Anterior',
                     dataIndex: 'vOpeMedEAnoAnterior',
-                    width: 156,
+                    width: 120,
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedEAnoAnterior');
                         if (idStatus < 0)
@@ -303,7 +310,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. 12 Meses Ant.',
+                    text: 'Média 12 Meses <br> Anterior',
                     dataIndex: 'vOpeMedE_12mAnterior',
                     width: 142,
                     renderer: function (v, metaData, record) {
@@ -320,7 +327,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. 6 Meses Ant.',
+                    text: 'Média 6 Meses <br> Anterior',
                     dataIndex: 'vOpeMedE_6mAnterior',
                     width: 136,
                     renderer: function (v, metaData, record) {
@@ -337,7 +344,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Méd. 3 Meses Ant.',
+                    text: 'Média 3 Meses <br> Anterior',
                     dataIndex: 'vOpeMedE_3mAnterior',
                     width: 136,
                     renderer: function (v, metaData, record) {
@@ -374,7 +381,7 @@ Ext.define('App.view.cpce.ItemGrid', {
     ],
     features: [
         {
-            groupHeaderTpl: '{name}',
+            groupHeaderTpl: "{name} | Total: {[values.rows[0].data.valorNota]}",
             ftype: 'groupingsummary'
         }
     ]

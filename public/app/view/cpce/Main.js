@@ -5,7 +5,7 @@ Ext.define('App.view.cpce.Main', {
     itemId: 'cpcemain',
     requires: [
     ],
-    title: 'Comparativo custo Operação',
+    title: 'Comparativo Custo Operação',
     layout: 'border',
 
     constructor: function() {

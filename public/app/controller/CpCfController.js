@@ -3,7 +3,10 @@ Ext.define('App.controller.CpCfController', {
 
     requires: [
         'App.view.cpcf.Main',
-        'App.view.cpcf.CpCfToolbar'
+        'App.view.cpcf.CpCfToolbar',
+        'App.view.cpcf.FiltroPanel',
+        'App.view.cpcf.MarcaGrid',
+        'App.view.cpcf.ItemGrid'
     ],
 
     control: {
