@@ -17,7 +17,7 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
                 fields: [{ name: 'idEmpresa' }, { name: 'apelido' }],
                 proxy: {
                     type: 'ajax',
-                    url: BASEURL + '/api/CpCe/listarempresas',
+                    url: BASEURL + '/api/CpCf/listarempresas',
                     timeout: 120000,
                     reader: {
                         type: 'json',
@@ -96,6 +96,44 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
             tooltip: 'Consultar',
             margin: '1 1 1 10',
             handler: function(form) {
+
+                var emp = me.down('#cbxempf').getRawValue();
+                var dtinicio = me.down('#dtiniciof').getRawValue();
+                var dtfim = me.down('#dtfimf').getRawValue();
+                var dtinicioe = me.down('#dtinicioef').getRawValue();
+                var dtfime = me.down('#dtfimef').getRawValue();
+                var nrnota = me.down('#nrnotaf').getRawValue();
+
+                var pfiltro = me.up('container').down('#filtroPanelf');
+                var gridmarca = pfiltro.down('#pmarcagrid').down('grid');
+
+                var arraySession = gridmarca.getSelection();
+
+                stringMarca ='';
+                for (let index = 0; index < arraySession.length; index++) {
+                    var element = arraySession[index];
+
+                    if(stringMarca){
+                        stringMarca += ','+element.data.idMarca;
+                    }else{
+                        stringMarca = element.data.idMarca;
+                    }
+                }
+
+                var itemgrid = me.up('container').down('#container1f').down('#pprincipalf').down('#itemgridpanelf').down('grid');
+
+                var params = {
+                    emp: emp,
+                    dtinicio: dtinicio,
+                    dtfim:  dtfim,
+                    dtinicioe: dtinicioe,
+                    dtfime:  dtfime,
+                    nrnota: nrnota,
+                    marca: stringMarca
+                };
+
+                itemgrid.getStore().getProxy().setExtraParams(params);
+                itemgrid.getStore().load();
 
             }
         });

@@ -17,7 +17,7 @@ Ext.define('App.view.cpcf.MarcaGrid', {
         proxy: {
             type: 'ajax',
             method:'POST',
-            url : BASEURL + '/api/CpCe/listarmarca',
+            url : BASEURL + '/api/CpCf/listarmarca',
             timeout: 120000,
             encode: true,
             format: 'json',

@@ -341,6 +341,7 @@ class CpCeController extends AbstractRestfulController
             $andSqlVar = '';
             if($emp  && $emp != "EC"){
                 $andSql = " and em.apelido = '$emp'";
+                $andEmp = " and empresa.apelido = '$emp'";
             }
             
             if($marca){
@@ -491,20 +492,22 @@ class CpCeController extends AbstractRestfulController
                                 pkg_help_variacao_custo.get_custo_med_e_3m_ant(ci.id_empresa, ci.id_item, ci.id_categoria, ci.id_cardex_item) as custo_med_e_3m_anterior
                                 
                             from ms.cp_compra c,
-                                ms.cp_compra_item ci,
-                                (select id_empresa, id_cardex_item, id_item, id_categoria, 
+                                 ms.cp_compra_item ci,
+                                 (select x.id_empresa, id_cardex_item, id_item, id_categoria, 
                                         custo_anterior, custo_operacao, custo_resultante,
                                         qtde_anterior_estoque as qtde_anterior, qtde_operacao_estoque as qtde_operacao, qtde_saldo_estoque as qtde_resultante,
                                         trunc((select max(data_created) 
-                                            from ms.cardex_item 
-                                            where id_empresa = x.id_empresa 
-                                            and id_item = x.id_item 
-                                            and id_categoria = x.id_categoria
-                                            and id_operacao = 1
-                                            and status = 'A'
-                                            and id_cardex_item < x.id_cardex_item)) as data_compra_anterior
-                                    from ms.cardex_item x
-                                    where status = 'A') k,
+                                                from ms.cardex_item 
+                                               where id_empresa = x.id_empresa 
+                                               and id_item = x.id_item 
+                                               and id_categoria = x.id_categoria
+                                               and id_operacao = 1
+                                               and status = 'A'
+                                               and id_cardex_item < x.id_cardex_item)) as data_compra_anterior
+                                    from ms.cardex_item x, ms.empresa empresa
+                                 where x.status = 'A'
+                                 and x.id_empresa = empresa.id_empresa
+                                 $andEmp) k,
                                 ms.pessoa p,
                                 ms.empresa em,
                                 ms.tb_item_categoria ic,
@@ -531,7 +534,7 @@ class CpCeController extends AbstractRestfulController
                             and c.id_operacao not in (10 /*Devolução de Venda*/, 45/*Entrada para analise de garantia*/, 14 /*Entrada Item em Transferencia*/, 50 /*Entrada para Reclassificac?o*/)
                             and m.descricao not in ('EMERGENCIAL')
                             $andSql
-                            and trunc(c.data_emissao) >= '01/01/2020'
+                            and trunc(c.data_emissao) >= '01/01/2019'
                             --and rownum < 100
                     )
                 where emp is not null
@@ -539,8 +542,9 @@ class CpCeController extends AbstractRestfulController
             ";
 
             $sql1 = "select count(*) as totalCount from ($sql)";
-            $stmt = $conn->prepare($sql1);
-            $stmt->execute();
+            // $stmt = $conn->prepare($sql1);
+            // $stmt->execute();
+            $stmt = $conn->query($sql1);
             $resultCount = $stmt->fetchAll();
 
             $sql = "
@@ -550,8 +554,9 @@ class CpCeController extends AbstractRestfulController
                  WHERE RNUM BETWEEN " . ($inicio +1 ) . " AND " . ($inicio + $final) . "
             ";
 
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
+            // $stmt = $conn->prepare($sql);
+            // $stmt->execute();
+            $stmt = $conn->query($sql);
             $results = $stmt->fetchAll();
 
             $hydrator = new ObjectProperty;
@@ -608,7 +613,6 @@ class CpCeController extends AbstractRestfulController
 
 
             $em = $this->getEntityManager();
-
 
             $sql = "
             ";
