@@ -1,57 +1,117 @@
-Ext.define('App.view.cpcf.ItemGrid', {
+Ext.define('App.view.cpcf.NfItensGrid', {
     extend: 'Ext.grid.Panel',
-    xtype: 'ItemGridf',
-    id: 'ItemGridf',
+    xtype: 'NfItensGrid',
+    id: 'NfItensGrid',
     margin: '1 1 1 1',
+    width: '100%',
+    scrollable: true,
     requires: [
-        'Ext.toolbar.Paging',
         'Ext.grid.feature.GroupingSummary',
         'Ext.ux.util.Format'
     ],
-    
     store: Ext.create('Ext.data.Store', {
                 model: Ext.create('Ext.data.Model', {
                             fields:[{name:'emp',mapping:'emp'},
-                                    {name:'idMarca',mapping:'idMarca'},
-                                    {name:'cnpj',mapping:'cnpj'},
-                                    {name:'dataInicio',mapping:'dataInicio'},
-                                    {name:'dataFim',mapping:'dataFim'},
-                                    {name:'dataInicioe',mapping:'dataInicioe'},
-                                    {name:'dataFime',mapping:'dataFime'},
+                                    {name:'numeroNota',mapping:'numeroNota'},
+                                    {name:'dataEmissao',mapping:'dataEmissao'},
+                                    {name:'dataEntrada',mapping:'dataEntrada'},
                                     {name:'nome',mapping:'nome'},
-                                    {name:'opeValor',mapping:'opeValor', type: 'number'},
+                                    {name:'codItem',mapping:'codItem'},
+                                    {name:'descricao',mapping:'descricao'},
+                                    {name:'marca',mapping:'marca'},
+                                    {name:'anteriorValor',mapping:'anteriorValor', type: 'number'},
+                                    {name:'opeValor',mapping:'opeValor', type: 'number'},,
+                                    {name:'opeQtde',mapping:'opeQtde', type: 'number'},
                                     {name:'opeXAnteriorValor',mapping:'opeXAnteriorValor', type: 'number'},
                                     {name:'opeXAnteriorIdx',mapping:'opeXAnteriorIdx', type: 'number'}
                                     ]
                 }),
-                autoLoad: false,
+                autoLoad: true,
                 proxy: {
                     type: 'ajax',
                     method:'POST',
-                    url : BASEURL + '/api/CpCf/listaritem',
+                    url : BASEURL + '/api/CpCf/listarnfitens',
                     timeout: 240000,
                     reader: {
                         type: 'json',
                         rootProperty: 'data'
                     }
                 },
-                groupField: 'nome'
+                groupField: 'numeroNota'
     }),
     columns: [
         {
             text: 'Emp',
             dataIndex: 'emp',
             width: 52,
-            summaryType: 'count'
+            summaryType: 'count',
+            hidden: true
+        },
+        {
+            text: 'Nota',
+            dataIndex: 'numeroNota',
+            width: 100
+        },
+        {
+            text: 'Emissão',
+            dataIndex: 'dataEmissao',
+            width: 80,
+            hidden: true
+        },
+        {
+            text: 'Entrada',
+            dataIndex: 'dataEntrada',
+            width: 80,
+            hidden: true
         },
         {
             text: 'Nome',
             dataIndex: 'nome',
             minWidth: 60,
+            flex: 1,
+            hidden: true
+        },
+        {
+            text: 'Item',
+            dataIndex: 'codItem',
+            width: 100
+        },
+        {
+            text: 'Descrição',
+            dataIndex: 'descricao',
+            minWidth: 60,
             flex: 1
         },
         {
-            text: 'Opereção',
+            text: 'Marca',
+            dataIndex: 'marca',
+            width: 80
+        },
+        {
+            text: 'Anterior',
+            dataIndex: 'anteriorValor',
+            width: 100,
+            renderer: function (v) {
+                var utilFormat = Ext.create('Ext.ux.util.Format');
+                return utilFormat.Value(v);
+            },
+            summaryType: function(records, values) {
+                var utilFormat = Ext.create('Ext.ux.util.Format');
+                var i = 0,
+                    length = records.length,
+                    total = 0,
+                    record;
+
+                for (; i < length; ++i) {
+                    record = records[i];
+                    total += parseFloat(record.get('anteriorValor'));
+                }
+
+                return utilFormat.Value(total);
+            }
+        },
+        {
+            text: 'Operação',
             dataIndex: 'opeValor',
             width: 100,
             renderer: function (v) {
@@ -74,9 +134,14 @@ Ext.define('App.view.cpcf.ItemGrid', {
             }
         },
         {
-            text: 'Variação Operação x Anterior',
+            text: 'Quantidade',
+            dataIndex: 'opeQtde',
+            width: 100
+        },
+        {
+            text: 'Operação x Anterior',
             dataIndex: 'opeXAnteriorValor',
-            width: 220,
+            width: 200,
             renderer: function (v) {
                 var utilFormat = Ext.create('Ext.ux.util.Format');
                 return utilFormat.Value(v);
@@ -126,7 +191,7 @@ Ext.define('App.view.cpcf.ItemGrid', {
     ],
     features: [
         {
-            groupHeaderTpl: "{[values.rows[0].data.cnpj]} - {name} ",
+            groupHeaderTpl: "{[values.rows[0].data.cnpj]} {name} ",
             ftype: 'groupingsummary'
         }
     ]

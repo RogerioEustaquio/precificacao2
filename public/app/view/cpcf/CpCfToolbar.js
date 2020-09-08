@@ -5,6 +5,7 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
     itemId: 'CpCfToolbar',
     margin: '2 2 2 2',
     requires: [
+        'App.view.cpcf.WindowNf'
     ],
     constructor: function() {
         var me = this;
@@ -105,7 +106,7 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
                 var nrnota = me.down('#nrnotaf').getRawValue();
 
                 var pfiltro = me.up('container').down('#filtroPanelf');
-                var gridmarca = pfiltro.down('#pmarcagrid').down('grid');
+                var gridmarca = pfiltro.down('#pmarcagridf').down('grid');
 
                 var arraySession = gridmarca.getSelection();
 
@@ -171,7 +172,63 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
                 btdtfime,
                 btnnota,
                 btnfilter,
-                btnSearch
+                btnSearch,
+                '->',
+                {
+                    xtype: 'button',
+                    text: 'Listar Notas',
+                    handler: function() {
+
+                        var objWindow = Ext.getCmp('WindowNf');
+
+                        if(!objWindow){
+                            objWindow = Ext.create('App.view.cpcf.WindowNf');
+                            objWindow.show();
+                        }
+
+                        var objNfItens = objWindow.down('grid');
+
+                        var itemgrid = me.up('container').down('#container1f').down('#pprincipalf').down('#itemgridpanelf').down('grid');
+
+                        var arrayLinha = itemgrid.getSelection();
+
+                        if(arrayLinha.length >0){
+
+                            var objForm = objWindow.down('panel').down('form');
+
+                            var emp         = arrayLinha[0].data.emp;
+                            var dtinicio    = arrayLinha[0].data.dataInicio;
+                            var dtfim       = arrayLinha[0].data.dataFim;
+                            var dtinicioe   = arrayLinha[0].data.dataInicioe;
+                            var dtfime      = arrayLinha[0].data.dataFime;
+                            var nrnota      = me.down('#nrnotaf').getRawValue();
+                            var idMarca       = arrayLinha[0].data.idMarca;
+                            var cnpj        = arrayLinha[0].data.cnpj;
+
+
+                            objForm.down('#filial').setValue(emp);
+                            objForm.down('#fornecedor').setValue(arrayLinha[0].data.nome);
+
+                            var exParams = {
+                                    emp: emp,
+                                    dtinicio: dtinicio,
+                                    dtfim:  dtfim,
+                                    dtinicioe: dtinicioe,
+                                    dtfime:  dtfime,
+                                    nrnota: nrnota,
+                                    marca: idMarca ,
+                                    cnpj: cnpj
+                                };
+                            
+                            objNfItens.getStore().getProxy().setExtraParams(exParams);
+                            objNfItens.getStore().load();
+
+                        }else{
+                            console.log('Selecione');
+                        }
+
+                    }
+                }
             ]
 
         });
