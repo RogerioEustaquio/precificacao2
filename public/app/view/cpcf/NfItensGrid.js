@@ -4,7 +4,7 @@ Ext.define('App.view.cpcf.NfItensGrid', {
     id: 'NfItensGrid',
     margin: '1 1 1 1',
     width: '100%',
-    scrollable: true,
+    // scrollable: true,
     requires: [
         'Ext.grid.feature.GroupingSummary',
         'Ext.ux.util.Format'
@@ -26,7 +26,7 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                                     {name:'opeXAnteriorIdx',mapping:'opeXAnteriorIdx', type: 'number'}
                                     ]
                 }),
-                autoLoad: true,
+                autoLoad: false,
                 proxy: {
                     type: 'ajax',
                     method:'POST',

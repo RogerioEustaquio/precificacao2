@@ -6,7 +6,8 @@ Ext.define('App.controller.CpCfController', {
         'App.view.cpcf.CpCfToolbar',
         'App.view.cpcf.FiltroPanel',
         'App.view.cpcf.MarcaGrid',
-        'App.view.cpcf.ItemGrid'
+        'App.view.cpcf.ItemGrid',
+        'App.view.cpcf.WindowNf'
     ],
 
     control: {

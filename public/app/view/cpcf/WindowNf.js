@@ -2,19 +2,23 @@ Ext.define('App.view.cpcf.WindowNf', {
     extend: 'Ext.window.Window',
     xtype: 'WindowNf',
     id: 'WindowNf',
-    height: 500,
+    // closeAction: 'method-hide',
+    height: 600,
     width: '90%',
+    maximizable: true,
     title: 'Notas',
     requires:[
         'App.view.cpcf.NfItensGrid'
     ],
-    layout: 'fit',
-    // scrollable: true,
+    layout: 'auto',
     items: {
         xtype: 'panel',
         id: 'WindowNfPanel',
-        layout: 'vbox',
-        scrollable: true,
+        layout: {
+            type: 'vbox',
+            align: 'stretch'
+        },
+        height: '100%',
         width: '100%',
         items:[
             {
