@@ -10,7 +10,7 @@ Ext.define('App.view.cpcf.WindowNf', {
     requires:[
         'App.view.cpcf.NfItensGrid'
     ],
-    layout: 'auto',
+    layout: 'fit',
     items: {
         xtype: 'panel',
         id: 'WindowNfPanel',
@@ -18,46 +18,45 @@ Ext.define('App.view.cpcf.WindowNf', {
             type: 'vbox',
             align: 'stretch'
         },
-        height: '100%',
-        width: '100%',
         items:[
             {
                 xtype: 'form',
                 height: 60,
-                width: '100%',
                 layout: {
                     type: 'hbox'
                 },
                 defaults: {
-                    margin: '2 2 2 2',
+                    margin: '2 12 2 2',
                     labelAlign: 'top'
                 },
                 items:[
                     {
                         xtype: 'displayfield',
                         layout: 'ancho',
-                        fieldLabel: 'Filial',
+                        fieldLabel: '<b>Filial',
                         id: 'filial',
                         labelWidth: 30
                     },
                     {
                         xtype: 'displayfield',
                         layout: 'ancho',
-                        fieldLabel: 'Fornecedor',
+                        fieldLabel: '<b>Fornecedor',
                         id: 'fornecedor',
                         labelWidth: 60
                     },
                     {
                         xtype: 'displayfield',
                         layout: 'ancho',
-                        fieldLabel: 'Total',
+                        fieldLabel: '<b>Total',
                         id: 'total',
-                        labelWidth: 32
+                        labelWidth: 32,
+                        value: 0
                     }
                 ]
             },
             {
-                xtype: 'NfItensGrid'
+                xtype: 'NfItensGrid',
+                flex: 1
             }
         ]
     }
