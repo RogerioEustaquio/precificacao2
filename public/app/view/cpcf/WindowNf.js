@@ -47,8 +47,32 @@ Ext.define('App.view.cpcf.WindowNf', {
                     {
                         xtype: 'displayfield',
                         layout: 'ancho',
-                        fieldLabel: '<b>Total',
-                        id: 'total',
+                        fieldLabel: '<b>Anterior',
+                        id: 'totalAnterior',
+                        labelWidth: 32,
+                        value: 0
+                    },
+                    {
+                        xtype: 'displayfield',
+                        layout: 'ancho',
+                        fieldLabel: '<b>Operação',
+                        id: 'totalOperacao',
+                        labelWidth: 32,
+                        value: 0
+                    },
+                    {
+                        xtype: 'displayfield',
+                        layout: 'ancho',
+                        fieldLabel: '<b>Operação x Anterior',
+                        id: 'totalOpeXAnt',
+                        labelWidth: 32,
+                        value: 0
+                    },
+                    {
+                        xtype: 'displayfield',
+                        layout: 'ancho',
+                        fieldLabel: '<b>% Operação x Anterior',
+                        id: 'totalPOpeXAnt',
                         labelWidth: 32,
                         value: 0
                     }

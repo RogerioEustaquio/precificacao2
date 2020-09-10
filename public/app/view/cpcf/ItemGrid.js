@@ -19,6 +19,7 @@ Ext.define('App.view.cpcf.ItemGrid', {
                                     {name:'dataInicioe',mapping:'dataInicioe'},
                                     {name:'dataFime',mapping:'dataFime'},
                                     {name:'nome',mapping:'nome'},
+                                    {name:'anteriorValor',mapping:'anteriorValor', type: 'number'},
                                     {name:'opeValor',mapping:'opeValor', type: 'number'},
                                     {name:'opeXAnteriorValor',mapping:'opeXAnteriorValor', type: 'number'},
                                     {name:'opeXAnteriorIdx',mapping:'opeXAnteriorIdx', type: 'number'}
@@ -49,6 +50,30 @@ Ext.define('App.view.cpcf.ItemGrid', {
             dataIndex: 'nome',
             minWidth: 60,
             flex: 1
+        },
+        {
+            text: 'Anterior',
+            dataIndex: 'anteriorValor',
+            width: 100,
+            hidden: true,
+            renderer: function (v) {
+                var utilFormat = Ext.create('Ext.ux.util.Format');
+                return utilFormat.Value(v);
+            },
+            summaryType: function(records, values) {
+                var utilFormat = Ext.create('Ext.ux.util.Format');
+                var i = 0,
+                    length = records.length,
+                    total = 0,
+                    record;
+
+                for (; i < length; ++i) {
+                    record = records[i];
+                    total += parseFloat(record.get('anteriorValor'));
+                }
+
+                return utilFormat.Value(total);
+            }
         },
         {
             text: 'Opereção',
@@ -114,11 +139,13 @@ Ext.define('App.view.cpcf.ItemGrid', {
 
                 for (; i < length; ++i) {
                     record = records[i];
-                    totalOpe += parseFloat(record.get('opeValor'));
-                    totalAnt += parseFloat(record.get('opeXAnteriorValor'));
+                    if(record.get('opeValor'))
+                        totalOpe += parseFloat(record.get('opeValor'));
+                    if(record.get('anteriorValor'))
+                        totalAnt += parseFloat(record.get('anteriorValor'));
                 }
 
-                i = (totalAnt/totalOpe)*100 ;
+                i = (totalOpe/totalAnt-1)*100;
 
                 return utilFormat.Value(i);
             }

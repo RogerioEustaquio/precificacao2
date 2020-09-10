@@ -5,10 +5,12 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
     itemId: 'CpCfToolbar',
     margin: '2 2 2 2',
     requires: [
-        'App.view.cpcf.WindowNf'
+        'App.view.cpcf.WindowNf',
+        'Ext.ux.util.Format'
     ],
     constructor: function() {
         var me = this;
+        var utilFormat = Ext.create('Ext.ux.util.Format');
 
         var empbx = Ext.create('Ext.form.field.ComboBox',{
             width: 70,
@@ -202,7 +204,7 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
                             var dtinicioe   = arrayLinha[0].data.dataInicioe;
                             var dtfime      = arrayLinha[0].data.dataFime;
                             var nrnota      = me.down('#nrnotaf').getRawValue();
-                            var idMarca       = arrayLinha[0].data.idMarca;
+                            var idMarca     = arrayLinha[0].data.idMarca;
                             var cnpj        = arrayLinha[0].data.cnpj;
 
 
@@ -221,7 +223,42 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
                                 };
                             
                             objNfItens.getStore().getProxy().setExtraParams(exParams);
-                            objNfItens.getStore().load();
+                            objNfItens.getStore().load(
+                                function(record){
+
+                                    var objForm = objNfItens.up('panel').down('form');
+                                    var objTotalAnt      = objForm.down('#totalAnterior');
+                                    var objTotalOpe      = objForm.down('#totalOperacao');
+                                    var objTotalOpeXAnt  = objForm.down('#totalOpeXAnt');
+                                    var objTotalPOpeXAnt = objForm.down('#totalPOpeXAnt');
+                                    var totalAnt     = 0,
+                                        totalOpe     = 0,
+                                        totalOpeXAnt = 0,
+                                        totalPOpeXAnt= 0;
+
+                                    for (let index = 0; index < record.length; index++) {
+                                        
+                                        var element = record[index].data;
+
+                                        if(element.anteriorValor)
+                                            totalAnt    += parseFloat(element.anteriorValor);
+                                        if(element.opeValor)
+                                            totalOpe    += parseFloat(element.opeValor);
+                                        if(element.opeXAnteriorValor)
+                                            totalOpeXAnt+= parseFloat(element.opeXAnteriorValor);
+                                        
+                                    }
+                                    
+                                    objTotalAnt.setValue(utilFormat.Value(totalAnt));
+                                    objTotalOpe.setValue(utilFormat.Value(totalOpe));
+                                    objTotalOpeXAnt.setValue(utilFormat.Value(totalOpeXAnt));
+
+                                    totalPOpeXAnt = (totalOpe/totalAnt-1)*100;
+
+                                    objTotalPOpeXAnt.setValue(utilFormat.Value(totalPOpeXAnt));
+                                    
+                                }
+                            );
 
                         }else{
                             console.log('Selecione');

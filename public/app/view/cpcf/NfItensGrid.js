@@ -12,7 +12,6 @@ Ext.define('App.view.cpcf.NfItensGrid', {
     constructor: function() {
         var me = this;
         var utilFormat = Ext.create('Ext.ux.util.Format');
-        var totalSum = 0;
 
         Ext.applyIf(me, {
 
@@ -57,7 +56,8 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                 {
                     text: 'Nota',
                     dataIndex: 'numeroNota',
-                    width: 100
+                    width: 100,
+                    hidden: true
                 },
                 {
                     text: 'Emissão',
@@ -69,7 +69,7 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                     text: 'Entrada',
                     dataIndex: 'dataEntrada',
                     width: 80,
-                    hidden: true
+                    hidden: false
                 },
                 {
                     text: 'Nome',
@@ -123,13 +123,8 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                     text: 'Operação',
                     dataIndex: 'opeValor',
                     width: 100,
-                    renderer: function (v) {
+                    renderer: function (v, metaData, record, store) {
         
-                        var objTotal = me.up('panel').down('form').down('#total');
-                        totalSum += parseFloat(v);
-
-                        objTotal.setValue(utilFormat.Value((totalSum/2)));
-                        
                         return utilFormat.Value(v);
                     },
                     summaryType: function(records, values) {
@@ -211,11 +206,13 @@ Ext.define('App.view.cpcf.NfItensGrid', {
 
                         for (; i < length; ++i) {
                             record = records[i];
-                            totalOpe += parseFloat(record.get('opeValor'));
-                            totalAnt += parseFloat(record.get('opeXAnteriorValor'));
+                            if(record.get('opeValor'))
+                                totalOpe += parseFloat(record.get('opeValor'));
+                            if(record.get('anteriorValor'))
+                                totalAnt += parseFloat(record.get('anteriorValor'));
                         }
 
-                        i = (totalAnt/totalOpe)*100 ;
+                        i = (totalOpe/totalAnt-1)*100;
                         i = (i <= -0.01 || i >= 0.01 ? utilFormat.Value(i) : null);
 
                         return i;

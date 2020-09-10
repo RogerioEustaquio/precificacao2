@@ -365,6 +365,7 @@ class CpCfController extends AbstractRestfulController
             $results = $stmt->fetchAll();
 
             $hydrator = new ObjectProperty;
+            $hydrator->addStrategy('anterior_valor', new ValueStrategy);
             $hydrator->addStrategy('ope_valor', new ValueStrategy);
             $hydrator->addStrategy('ope_x_anterior_valor', new ValueStrategy);
             $hydrator->addStrategy('ope_x_anterior_idx', new ValueStrategy);
