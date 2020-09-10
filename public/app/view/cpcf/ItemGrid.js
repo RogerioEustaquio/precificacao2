@@ -102,9 +102,18 @@ Ext.define('App.view.cpcf.ItemGrid', {
             text: 'Variação Operação x Anterior',
             dataIndex: 'opeXAnteriorValor',
             width: 220,
-            renderer: function (v) {
+            renderer: function (v, metaData, record) {
                 var utilFormat = Ext.create('Ext.ux.util.Format');
-                return utilFormat.Value(v);
+                var idStatus = record.get('opeXAnteriorValor');
+
+                if (idStatus < 0)
+                    metaData.tdCls = 'x-grid-cell-green-border';
+
+                if (idStatus > 0)
+                    metaData.tdCls = 'x-grid-cell-red-border';
+                
+                v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
+                return v;
             },
             summaryType: function(records, values) {
                 var utilFormat = Ext.create('Ext.ux.util.Format');
@@ -125,9 +134,18 @@ Ext.define('App.view.cpcf.ItemGrid', {
             text: '% Operação x Anterior',
             dataIndex: 'opeXAnteriorIdx',
             width: 200,
-            renderer: function (v) {
+            renderer: function (v, metaData, record) {
                 var utilFormat = Ext.create('Ext.ux.util.Format');
-                return utilFormat.Value(v);
+                var idStatus = record.get('opeXAnteriorIdx');
+
+                if (idStatus < 0)
+                    metaData.tdCls = 'x-grid-cell-green-border';
+
+                if (idStatus > 0)
+                    metaData.tdCls = 'x-grid-cell-red-border';
+                
+                v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
+                return v;
             },
             summaryType: function(records, values) {
                 var utilFormat = Ext.create('Ext.ux.util.Format');

@@ -187,7 +187,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                 },
                 {
                     text: 'Média Ano <br> Anterior',
-                    dataIndex: 'custoMedanoAnterior',
+                    dataIndex: 'custoMedAnoAnterior',
                     width: 120,
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
@@ -271,7 +271,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                             metaData.tdCls = 'x-grid-cell-red-border';
 
                         var utilFormat = Ext.create('Ext.ux.util.Format');
-                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
+                        v = (idStatus <= -0.01 || idStatus >= 0.01 ? utilFormat.Value(v) : null);
                         return v;
                     }
                 },

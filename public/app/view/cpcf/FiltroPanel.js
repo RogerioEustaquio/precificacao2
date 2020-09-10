@@ -9,7 +9,6 @@ Ext.define('App.view.cpcf.FiltroPanel', {
     constructor: function() {
         var me = this;
 
-
         Ext.applyIf(me, {
 
             items:[
@@ -27,7 +26,6 @@ Ext.define('App.view.cpcf.FiltroPanel', {
                 }
             ]
             
-
         });
 
         me.callParent(arguments);

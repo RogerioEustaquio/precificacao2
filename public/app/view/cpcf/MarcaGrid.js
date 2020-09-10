@@ -34,12 +34,7 @@ Ext.define('App.view.cpcf.MarcaGrid', {
             dataIndex: 'marca',
             flex: 1
             
-        }//,
-        // {
-        //     text: 'Itens',
-        //     dataIndex: 'skus',
-        //     width: 60
-        // }
+        }
     ],
     
     listeners: {

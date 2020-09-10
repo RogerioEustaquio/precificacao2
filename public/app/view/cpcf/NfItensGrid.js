@@ -4,7 +4,6 @@ Ext.define('App.view.cpcf.NfItensGrid', {
     id: 'NfItensGrid',
     margin: '1 1 1 1',
     width: '100%',
-    // scrollable: true,
     requires: [
         'Ext.grid.feature.GroupingSummary',
         'Ext.ux.util.Format'
@@ -158,13 +157,12 @@ Ext.define('App.view.cpcf.NfItensGrid', {
 
                         if (idStatus > 0)
                             metaData.tdCls = 'x-grid-cell-red-border';
-                            
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        
                         v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     },
                     summaryType: function(records, values) {
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+
                         var i = 0,
                             length = records.length,
                             total = 0,
@@ -191,13 +189,12 @@ Ext.define('App.view.cpcf.NfItensGrid', {
 
                         if (idStatus > 0)
                             metaData.tdCls = 'x-grid-cell-red-border';
-                            
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+                        
                         v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     },
                     summaryType: function(records, values) {
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+
                         var i = 0,
                             length = records.length,
                             totalOpe = 0,

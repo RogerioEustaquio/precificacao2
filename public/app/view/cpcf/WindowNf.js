@@ -2,7 +2,6 @@ Ext.define('App.view.cpcf.WindowNf', {
     extend: 'Ext.window.Window',
     xtype: 'WindowNf',
     id: 'WindowNf',
-    // closeAction: 'method-hide',
     height: 600,
     width: '90%',
     maximizable: true,
