@@ -361,7 +361,7 @@ class CpCeController extends AbstractRestfulController
             }
 
             if($dtfime){
-                $andSql .= " and trunc(c.data_entrada) <= '$dtfime";
+                $andSql .= " and trunc(c.data_entrada) <= '$dtfime'";
             }
 
             if($nrnota){

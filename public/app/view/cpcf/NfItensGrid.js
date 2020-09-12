@@ -97,10 +97,10 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                     text: 'Anterior',
                     dataIndex: 'anteriorValor',
                     width: 100,
-                    renderer: function (v, metaData, record) {
-                        var idStatus = record.get('anteriorValor');
-                            
-                        v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
+                    align: 'right',
+                    renderer: function (v) {
+   
+                        v = (v < 0 || v > 0 ? utilFormat.Value(v) : null);
                         return v;
                     },
                     summaryType: function(records, values) {
@@ -112,19 +112,23 @@ Ext.define('App.view.cpcf.NfItensGrid', {
 
                         for (; i < length; ++i) {
                             record = records[i];
-                            total += parseFloat(record.get('anteriorValor'));
+                            if(record.get('anteriorValor'))
+                                total += parseFloat(record.get('anteriorValor'));
                         }
 
-                        return utilFormat.Value(total);
+                        total = (total < 0 || total > 0 ? utilFormat.Value(total) : null);
+                        return total;
                     }
                 },
                 {
                     text: 'Operação',
                     dataIndex: 'opeValor',
                     width: 100,
-                    renderer: function (v, metaData, record, store) {
+                    align: 'right',
+                    renderer: function (v) {
         
-                        return utilFormat.Value(v);
+                        v = (v < 0 || v > 0 ? utilFormat.Value(v) : null);
+                        return v;
                     },
                     summaryType: function(records, values) {
 
@@ -135,21 +139,25 @@ Ext.define('App.view.cpcf.NfItensGrid', {
 
                         for (; i < length; ++i) {
                             record = records[i];
-                            total += parseFloat(record.get('opeValor'));
+                            if(record.get('opeValor'))
+                                total += parseFloat(record.get('opeValor'));
                         }
 
-                        return utilFormat.Value(total);
+                        total = (total < 0 || total > 0 ? utilFormat.Value(total) : null);
+                        return total;
                     }
                 },
                 {
                     text: 'Quantidade',
                     dataIndex: 'opeQtde',
+                    align: 'center',
                     width: 100
                 },
                 {
-                    text: 'Operação x Anterior',
+                    text: 'Operação x<br>Anterior',
                     dataIndex: 'opeXAnteriorValor',
-                    width: 200,
+                    width: 140,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('opeXAnteriorValor');
                         if (idStatus < 0)
@@ -170,18 +178,19 @@ Ext.define('App.view.cpcf.NfItensGrid', {
 
                         for (; i < length; ++i) {
                             record = records[i];
-                            total += parseFloat(record.get('opeXAnteriorValor'));
+                            if(record.get('opeXAnteriorValor'))
+                                total += parseFloat(record.get('opeXAnteriorValor'));
                         }
 
                         total = (total < 0 || total > 0 ? utilFormat.Value(total) : null);
-
                         return total;
                     }
                 },
                 {
-                    text: '% Operação x Anterior',
+                    text: '% Operação x<br>Anterior',
                     dataIndex: 'opeXAnteriorIdx',
-                    width: 200,
+                    width: 160,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('opeXAnteriorIdx');
                         if (idStatus < 0)
@@ -199,6 +208,7 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                             length = records.length,
                             totalOpe = 0,
                             totalAnt = 0,
+                            totalPOpeAnt=0,
                             record;
 
                         for (; i < length; ++i) {
@@ -209,10 +219,11 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                                 totalAnt += parseFloat(record.get('anteriorValor'));
                         }
 
-                        i = (totalOpe/totalAnt-1)*100;
-                        i = (i <= -0.01 || i >= 0.01 ? utilFormat.Value(i) : null);
-
-                        return i;
+                        if(totalOpe && totalAnt)
+                            totalPOpeAnt = (totalOpe/totalAnt-1)*100;
+                        
+                        totalPOpeAnt = (totalPOpeAnt <= -0.01 || totalPOpeAnt >= 0.01 ? utilFormat.Value(totalPOpeAnt) : null);
+                        return totalPOpeAnt;
                     }
                 }
             ],

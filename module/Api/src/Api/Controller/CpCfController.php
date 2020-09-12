@@ -230,7 +230,7 @@ class CpCfController extends AbstractRestfulController
                             --sum(custo_operacao - custo_anterior) as ope_x_anterior_var, -- não utilizado
                             sum((custo_operacao - custo_anterior)*qtde_operacao) as ope_x_anterior_valor,
                             case when nvl(sum(custo_anterior*qtde_operacao),0) > 0
-                                then round(100*(sum(nvl(custo_operacao,0)*qtde_operacao)/sum(nvl(custo_anterior,0)*qtde_operacao)-1),2)  -- Operação x Custo Anterior
+                                then round(100*(sum((case when custo_anterior is not null then custo_operacao*qtde_operacao end))/sum((case when custo_anterior is not null then custo_anterior*qtde_operacao end))-1),2)
                                 else null
                             end as ope_x_anterior_idx
 
@@ -459,7 +459,7 @@ class CpCfController extends AbstractRestfulController
                            sum(qtde_operacao) as ope_qtde,            
                            sum((custo_operacao - custo_anterior)*qtde_operacao) as ope_x_anterior_valor,
                            case when nvl(sum(custo_anterior*qtde_operacao),0) > 0
-                                then round(100*(sum(nvl(custo_operacao,0)*qtde_operacao)/sum(nvl(custo_anterior,0)*qtde_operacao)-1),2)  -- Operação x Custo Anterior
+                                then round(100*(sum((case when custo_anterior is not null then custo_operacao*qtde_operacao end))/sum((case when custo_anterior is not null then custo_anterior*qtde_operacao end))-1),2)
                                 else null
                             end as ope_x_anterior_idx
                     from (select emp,

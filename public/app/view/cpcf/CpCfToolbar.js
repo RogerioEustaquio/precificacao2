@@ -135,6 +135,8 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
                     marca: stringMarca
                 };
 
+                console.log(params);
+
                 itemgrid.getStore().getProxy().setExtraParams(params);
                 itemgrid.getStore().load();
 
@@ -221,7 +223,7 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
                                     marca: idMarca ,
                                     cnpj: cnpj
                                 };
-                            
+
                             objNfItens.getStore().getProxy().setExtraParams(exParams);
                             objNfItens.getStore().load(
                                 function(record){
@@ -251,11 +253,16 @@ Ext.define('App.view.cpcf.CpCfToolbar', {
                                     
                                     objTotalAnt.setValue(utilFormat.Value(totalAnt));
                                     objTotalOpe.setValue(utilFormat.Value(totalOpe));
-                                    objTotalOpeXAnt.setValue(utilFormat.Value(totalOpeXAnt));
 
-                                    totalPOpeXAnt = (totalOpe/totalAnt-1)*100;
+                                    totalOpeXAnt = (totalOpeXAnt < 0 || totalOpeXAnt > 0 ? utilFormat.Value(totalOpeXAnt) : null);
+                                    objTotalOpeXAnt.setValue(totalOpeXAnt);
 
-                                    objTotalPOpeXAnt.setValue(utilFormat.Value(totalPOpeXAnt));
+                                    if(totalOpe && totalAnt)
+                                        totalPOpeXAnt = (totalOpe/totalAnt-1)*100;
+
+                                    totalPOpeXAnt = (totalPOpeXAnt < 0 || totalPOpeXAnt > 0 ? utilFormat.Value(totalPOpeXAnt) : null);
+
+                                    objTotalPOpeXAnt.setValue(totalPOpeXAnt);
                                     
                                 }
                             );

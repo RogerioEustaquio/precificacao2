@@ -176,7 +176,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Ano <br> Anterior',
+                    text: 'Últ. Ano <br> Anterior',
                     dataIndex: 'custoUltAnoAnterior',
                     width: 80,
                     renderer: function (v) {
@@ -259,7 +259,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 },
                 {
-                    text: 'Ano <br> Anterior',
+                    text: 'Últ. Ano <br> Anterior',
                     dataIndex: 'vOpeUltAnoAnterior',
                     width: 80,
                     renderer: function (v, metaData, record) {
