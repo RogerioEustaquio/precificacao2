@@ -339,6 +339,7 @@ class CpCeController extends AbstractRestfulController
 
             $andSql = '';
             $andSqlVar = '';
+            $andEmp = '';
             if($emp  && $emp != "EC"){
                 $andSql = " and em.apelido = '$emp'";
                 $andEmp = " and empresa.apelido = '$emp'";
@@ -540,6 +541,9 @@ class CpCeController extends AbstractRestfulController
                 where emp is not null
                 $andSqlVar
             ";
+            
+            // print "$sql";
+            // exit;
 
             $sql1 = "select count(*) as totalCount from ($sql)";
             // $stmt = $conn->prepare($sql1);

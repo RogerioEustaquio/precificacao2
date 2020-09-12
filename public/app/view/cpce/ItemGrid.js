@@ -148,7 +148,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                 {
                     text: 'Anterior',
                     dataIndex: 'custoAnterior',
-                    width: 80,
+                    width: 84,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -158,7 +159,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                 {
                     text: 'Operação',
                     dataIndex: 'custoOperacao',
-                    width: 82,
+                    width: 94,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -168,7 +170,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                 {
                     text: 'Resultante',
                     dataIndex: 'custoResultante',
-                    width: 90,
+                    width: 100,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -178,7 +181,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                 {
                     text: 'Últ. Ano <br> Anterior',
                     dataIndex: 'custoUltAnoAnterior',
-                    width: 80,
+                    width: 84,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -189,6 +193,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média Ano <br> Anterior',
                     dataIndex: 'custoMedAnoAnterior',
                     width: 120,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -199,6 +204,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média .P <br> Ano Anterior',
                     dataIndex: 'custoMedEAnoAnterior',
                     width: 120,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -209,6 +215,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média 12 Meses <br> Anterior',
                     dataIndex: 'custoMedE_12mAnterior',
                     width: 142,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -219,6 +226,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média 6 Meses <br> Anterior',
                     dataIndex: 'custoMedE_6mAnterior',
                     width: 136,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -229,6 +237,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média 3 Meses <br> Anterior',
                     dataIndex: 'custoMedE_3mAnterior',
                     width: 136,
+                    align: 'right',
                     renderer: function (v) {
                         var utilFormat = Ext.create('Ext.ux.util.Format');
                         v = (v ? utilFormat.Value(v) : null);
@@ -243,7 +252,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                 {
                     text: 'Anterior',
                     dataIndex: 'vOpeAnterior',
-                    width: 80,
+                    width: 84,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
 
                         var idStatus = record.get('vOpeAnterior');
@@ -261,7 +271,8 @@ Ext.define('App.view.cpce.ItemGrid', {
                 {
                     text: 'Últ. Ano <br> Anterior',
                     dataIndex: 'vOpeUltAnoAnterior',
-                    width: 80,
+                    width: 94,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeUltAnoAnterior');
                         if (idStatus < 0)
@@ -279,6 +290,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média Ano <br> Anterior',
                     dataIndex: 'vOpeMedAnoAnterior',
                     width: 120,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedAnoAnterior');
                         if (idStatus < 0)
@@ -296,6 +308,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média .P <br> Ano Anterior',
                     dataIndex: 'vOpeMedEAnoAnterior',
                     width: 120,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedEAnoAnterior');
                         if (idStatus < 0)
@@ -313,6 +326,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média 12 Meses <br> Anterior',
                     dataIndex: 'vOpeMedE_12mAnterior',
                     width: 142,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedE_12mAnterior');
                         if (idStatus < 0)
@@ -330,6 +344,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média 6 Meses <br> Anterior',
                     dataIndex: 'vOpeMedE_6mAnterior',
                     width: 136,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedE_6mAnterior');
                         if (idStatus < 0)
@@ -347,6 +362,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     text: 'Média 3 Meses <br> Anterior',
                     dataIndex: 'vOpeMedE_3mAnterior',
                     width: 136,
+                    align: 'right',
                     renderer: function (v, metaData, record) {
                         var idStatus = record.get('vOpeMedE_3mAnterior');
                         if (idStatus < 0)
@@ -366,17 +382,20 @@ Ext.define('App.view.cpce.ItemGrid', {
         {
             text: 'Qt. Anterior',
             dataIndex: 'qtdeAnterior',
-            width: 100
+            width: 100,
+            align: 'center'
         },
         {
             text: 'Qt. Operação',
             dataIndex: 'qtdeOperacao',
-            width: 110
+            width: 110,
+            align: 'center'
         },
         {
             text: 'Qt. Resultante',
             dataIndex: 'qtdeResultante',
-            width: 110
+            width: 110,
+            align: 'center'
         }
     ],
     features: [
