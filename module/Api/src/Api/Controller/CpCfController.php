@@ -224,16 +224,14 @@ class CpCfController extends AbstractRestfulController
                            to_char(max(data_emissao),'dd/mm/yyyy') data_fim,
                            to_char(min(data_entrada),'dd/mm/yyyy') data_inicioe,
                            to_char(max(data_entrada),'dd/mm/yyyy') data_fime,
-                           sum(custo_anterior*qtde_operacao) as anterior_valor,
-                            sum(custo_operacao*qtde_operacao) as ope_valor,
-                            sum(qtde_operacao) as ope_qtde,            
-                            --sum(custo_operacao - custo_anterior) as ope_x_anterior_var, -- não utilizado
-                            sum((custo_operacao - custo_anterior)*qtde_operacao) as ope_x_anterior_valor,
-                            case when nvl(sum(custo_anterior*qtde_operacao),0) > 0
-                                then round(100*(sum((case when custo_anterior is not null then custo_operacao*qtde_operacao end))/sum((case when custo_anterior is not null then custo_anterior*qtde_operacao end))-1),2)
+                           sum(case when nvl(custo_anterior,0) >0 then custo_anterior*qtde_operacao end) anterior_valor,
+                           sum(custo_operacao*qtde_operacao) as ope_valor,
+                           sum(qtde_operacao) as ope_qtde,
+                           sum(case when nvl(custo_anterior,0)>0 then (custo_operacao - custo_anterior) * qtde_operacao end) ope_x_anterior_valor,
+                           case when nvl(sum(custo_anterior*qtde_operacao),0) > 0
+                                then round(100*(sum((case when nvl(custo_anterior,0) > 0 then (custo_operacao - custo_anterior)*qtde_operacao end))/sum((case when nvl(custo_anterior,0) > 0 then custo_anterior*qtde_operacao end))),2)
                                 else null
                             end as ope_x_anterior_idx
-
                     from (
                         select emp,
                                 id_operacao,
@@ -454,12 +452,12 @@ class CpCfController extends AbstractRestfulController
                            cod_item,
                            descricao,
                            marca,
-                           sum(custo_anterior*qtde_operacao) as anterior_valor,
+                           sum(case when nvl(custo_anterior,0) >0 then custo_anterior*qtde_operacao end) anterior_valor,
                            sum(custo_operacao*qtde_operacao) as ope_valor,
-                           sum(qtde_operacao) as ope_qtde,            
-                           sum((custo_operacao - custo_anterior)*qtde_operacao) as ope_x_anterior_valor,
+                           sum(qtde_operacao) as ope_qtde,
+                           sum(case when nvl(custo_anterior,0)>0 then (custo_operacao - custo_anterior) * qtde_operacao end) ope_x_anterior_valor,
                            case when nvl(sum(custo_anterior*qtde_operacao),0) > 0
-                                then round(100*(sum((case when custo_anterior is not null then custo_operacao*qtde_operacao end))/sum((case when custo_anterior is not null then custo_anterior*qtde_operacao end))-1),2)
+                                then round(100*(sum((case when nvl(custo_anterior,0) > 0 then (custo_operacao - custo_anterior)*qtde_operacao end))/sum((case when nvl(custo_anterior,0) > 0 then custo_anterior*qtde_operacao end))),2)
                                 else null
                             end as ope_x_anterior_idx
                     from (select emp,

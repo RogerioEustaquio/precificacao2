@@ -11,9 +11,8 @@ Ext.define('App.view.cpcf.ItemGrid', {
     constructor: function() {
         var me = this;
         var utilFormat = Ext.create('Ext.ux.util.Format');
-
-        var operacaoTotal= 0;
-        var opeXAnteriorValorTotal= 0;
+        // var operacaoTotal= 0;
+        // var opeXAnteriorValorTotal= 0;
 
         Ext.applyIf(me, {
 
@@ -66,7 +65,9 @@ Ext.define('App.view.cpcf.ItemGrid', {
                     align: 'right',
                     hidden: true,
                     renderer: function (v) {
-                        return utilFormat.Value(v);
+
+                        v = (v < 0 || v > 0 ? utilFormat.Value(v) : null);
+                        return v;
                     },
                     summaryType: function(records, values) {
 
@@ -92,8 +93,6 @@ Ext.define('App.view.cpcf.ItemGrid', {
                     width: 100,
                     align: 'right',
                     renderer: function (v) {
-                        operacaoTotal += v;
-
                         return utilFormat.Value(v);
                     },
                     summaryType: function(records, values) {
@@ -119,7 +118,6 @@ Ext.define('App.view.cpcf.ItemGrid', {
                     width: 180,
                     align: 'right',
                     renderer: function (v, metaData, record) {
-                        opeXAnteriorValorTotal += v;
 
                         var idStatus = record.get('opeXAnteriorValor');
 
@@ -167,29 +165,13 @@ Ext.define('App.view.cpcf.ItemGrid', {
                         v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                         return v;
                     },
-                    // summaryType: 'sum',
-                    // summaryRenderer: function(value){
-
-                    //     console.log('Entrou');
-                    //     console.log(operacaoTotal);
-                    //     console.log(opeXAnteriorValorTotal);
-
-                    //     var totalPOpeAnt = 0;
-
-                    //     if(operacaoTotal && opeXAnteriorValorTotal)
-                    //         totalPOpeAnt = (operacaoTotal/opeXAnteriorValorTotal)*100;
-
-                    //         totalPOpeAnt = (totalPOpeAnt < 0 || totalPOpeAnt > 0 ? utilFormat.Value(totalPOpeAnt) : null);
-                        
-                    //     return totalPOpeAnt;
-
-                    // }
                     summaryType: function(records, values) {
 
                         var i = 0,
                             length = records.length,
                             totalOpe = 0,
                             totalAnt = 0,
+                            totalOpeAnt = 0,
                             totalPOpeAnt=0,
                             record;
 
@@ -199,10 +181,12 @@ Ext.define('App.view.cpcf.ItemGrid', {
                                 totalOpe += parseFloat(record.get('opeValor'));
                             if(record.get('anteriorValor'))
                                 totalAnt += parseFloat(record.get('anteriorValor'));
+                            if(record.get('opeXAnteriorValor'))
+                            totalOpeAnt += parseFloat(record.get('opeXAnteriorValor'));
                         }
 
-                        if(totalOpe && totalAnt)
-                            totalPOpeAnt = (totalOpe/totalAnt-1)*100;
+                        if(totalAnt)
+                            totalPOpeAnt = (totalOpeAnt/totalAnt)*100;
 
                         totalPOpeAnt = (totalPOpeAnt < 0 || totalPOpeAnt > 0 ? utilFormat.Value(totalPOpeAnt) : null);
                         return totalPOpeAnt;

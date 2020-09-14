@@ -208,6 +208,7 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                             length = records.length,
                             totalOpe = 0,
                             totalAnt = 0,
+                            totalOpeAnt =0,
                             totalPOpeAnt=0,
                             record;
 
@@ -217,10 +218,12 @@ Ext.define('App.view.cpcf.NfItensGrid', {
                                 totalOpe += parseFloat(record.get('opeValor'));
                             if(record.get('anteriorValor'))
                                 totalAnt += parseFloat(record.get('anteriorValor'));
+                            if(record.get('opeXAnteriorValor'))
+                                totalOpeAnt += parseFloat(record.get('opeXAnteriorValor'));
                         }
 
-                        if(totalOpe && totalAnt)
-                            totalPOpeAnt = (totalOpe/totalAnt-1)*100;
+                        if(totalAnt)
+                            totalPOpeAnt = (totalOpeAnt/totalAnt)*100;
                         
                         totalPOpeAnt = (totalPOpeAnt <= -0.01 || totalPOpeAnt >= 0.01 ? utilFormat.Value(totalPOpeAnt) : null);
                         return totalPOpeAnt;

@@ -2,8 +2,8 @@ Ext.define('App.view.cpcf.WindowNf', {
     extend: 'Ext.window.Window',
     xtype: 'WindowNf',
     id: 'WindowNf',
-    height: 600,
-    width: '90%',
+    height: Ext.getBody().getHeight() * 0.8,
+    width: Ext.getBody().getWidth() * 0.9,
     maximizable: true,
     title: 'Notas',
     requires:[
