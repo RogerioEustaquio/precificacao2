@@ -66,11 +66,10 @@ Ext.define('App.view.cpcf.ItemGrid', {
                     align: 'right',
                     hidden: true,
                     renderer: function (v) {
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
                         return utilFormat.Value(v);
                     },
                     summaryType: function(records, values) {
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+
                         var i = 0,
                             length = records.length,
                             total = 0,
@@ -94,11 +93,11 @@ Ext.define('App.view.cpcf.ItemGrid', {
                     align: 'right',
                     renderer: function (v) {
                         operacaoTotal += v;
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+
                         return utilFormat.Value(v);
                     },
                     summaryType: function(records, values) {
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+
                         var i = 0,
                             length = records.length,
                             total = 0,
@@ -122,7 +121,6 @@ Ext.define('App.view.cpcf.ItemGrid', {
                     renderer: function (v, metaData, record) {
                         opeXAnteriorValorTotal += v;
 
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
                         var idStatus = record.get('opeXAnteriorValor');
 
                         if (idStatus < 0)
@@ -135,7 +133,7 @@ Ext.define('App.view.cpcf.ItemGrid', {
                         return v;
                     },
                     summaryType: function(records, values) {
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+
                         var i = 0,
                             length = records.length,
                             total = 0,
@@ -157,7 +155,7 @@ Ext.define('App.view.cpcf.ItemGrid', {
                     width: 120,
                     align: 'right',
                     renderer: function (v, metaData, record) {
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+
                         var idStatus = record.get('opeXAnteriorIdx');
 
                         if (idStatus < 0)
@@ -187,7 +185,7 @@ Ext.define('App.view.cpcf.ItemGrid', {
 
                     // }
                     summaryType: function(records, values) {
-                        var utilFormat = Ext.create('Ext.ux.util.Format');
+
                         var i = 0,
                             length = records.length,
                             totalOpe = 0,

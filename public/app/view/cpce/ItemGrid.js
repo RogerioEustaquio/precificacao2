@@ -247,7 +247,7 @@ Ext.define('App.view.cpce.ItemGrid', {
             ]
         },
         {
-            text: 'Variação',
+            text: 'Variação Operação x<br>',
             columns:[
                 {
                     text: 'Anterior',
@@ -377,8 +377,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                     }
                 }
             ]
-        }
-        ,
+        },
         {
             text: 'Qt. Anterior',
             dataIndex: 'qtdeAnterior',
