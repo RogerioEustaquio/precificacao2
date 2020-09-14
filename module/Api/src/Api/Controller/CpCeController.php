@@ -277,6 +277,7 @@ class CpCeController extends AbstractRestfulController
                             end) nrorder
                         from ms.tb_estoque e
                     where nvl(e.custo_contabil,0) > 0
+                    and e.id_empresa = 7
                     order by 2
                     ";
             
