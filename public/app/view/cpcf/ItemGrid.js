@@ -195,7 +195,7 @@ Ext.define('App.view.cpcf.ItemGrid', {
             ],
             features: [
                 {
-                    groupHeaderTpl: "{[values.rows[0].data.cnpj]} - {name} ",
+                    groupHeaderTpl: "{name}",
                     ftype: 'groupingsummary'
                 }
             ]
