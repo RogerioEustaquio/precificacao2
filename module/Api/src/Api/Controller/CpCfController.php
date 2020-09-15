@@ -219,7 +219,7 @@ class CpCfController extends AbstractRestfulController
             $em = $this->getEntityManager();
 
             $sql = "select emp,
-                           id_marca, nome,
+                           id_marca, cnpj, nome,
                            to_char(min(data_emissao),'dd/mm/yyyy') data_inicio,
                            to_char(max(data_emissao),'dd/mm/yyyy') data_fim,
                            to_char(min(data_entrada),'dd/mm/yyyy') data_inicioe,
@@ -352,7 +352,7 @@ class CpCfController extends AbstractRestfulController
                         where emp is not null
                     )
                     where nome is not null
-                    group by emp, id_marca, nome
+                    group by emp, id_marca, cnpj, nome
                     order by emp
             ";
 
