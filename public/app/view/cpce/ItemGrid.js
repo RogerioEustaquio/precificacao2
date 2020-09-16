@@ -1,24 +1,25 @@
 Ext.define('App.view.cpce.ItemGrid', {
     extend: 'Ext.grid.Panel',
     xtype: 'ItemGrid',
+    columnLines: true,
     margin: '1 1 1 1',
     requires: [
         'Ext.toolbar.Paging',
         'Ext.grid.feature.GroupingSummary',
         'Ext.ux.util.Format'
     ],
+    bbar: {
+        xtype: 'pagingtoolbar',
+        displayInfo: true,
+        displayMsg: 'Exibindo solicitações {0} - {1} de {2}',
+        emptyMsg: "Não há solicitações a serem exibidos"
+    },
     constructor: function() {
         var me = this;
         var utilFormat = Ext.create('Ext.ux.util.Format');
 
         Ext.applyIf(me, {
     
-            bbar: {
-                xtype: 'pagingtoolbar',
-                displayInfo: true,
-                displayMsg: 'Exibindo solicitações {0} - {1} de {2}',
-                emptyMsg: "Não há solicitações a serem exibidos"
-            },
             store: Ext.create('Ext.data.Store', {
                         model: Ext.create('Ext.data.Model', {
                                     fields:[{name:'emp',mapping:'emp'},
@@ -63,14 +64,19 @@ Ext.define('App.view.cpce.ItemGrid', {
                             type: 'ajax',
                             method:'POST',
                             url : BASEURL + '/api/CpCe/listaritem',
+                            encode: true,
                             timeout: 240000,
+                            format: 'json',
                             reader: {
                                 type: 'json',
                                 rootProperty: 'data',
                                 totalProperty: 'total'
                             }
                         },
-                        groupField: 'numeroNota'
+                        // groupField: 'numeroNota'
+                        grouper: {
+                                property: 'numeroNota'
+                        }
             }),
             columns: [
                 {

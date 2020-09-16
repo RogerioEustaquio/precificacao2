@@ -97,7 +97,19 @@ Ext.define('App.view.cpce.CpCeToolbar', {
             margin: '1 1 1 10',
             handler: function(form) {
 
-                var emp = me.down('#cbxemp').getRawValue();
+                
+                var emp = '';
+
+                if(me.down('#cbxemp').getRawValue()){
+                    var emp = me.down('#cbxemp').selection.data.idEmpresa;
+                }
+                
+                if(!emp){
+                    Ext.Msg.alert('info', 'Selecione uma Empresa.');
+                    return null;
+                }
+
+
                 var dtinicio = me.down('#dtinicio').getRawValue();
                 var dtfim = me.down('#dtfim').getRawValue();
                 var dtinicioe = me.down('#dtinicioe').getRawValue();

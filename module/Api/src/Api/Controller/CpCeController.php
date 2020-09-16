@@ -41,12 +41,7 @@ class CpCeController extends AbstractRestfulController
                     ";
             }else{
 
-                $sql = "select id_empresa, apelido as nome
-                            from ms.empresa 
-                        where id_matriz = 1 
-                        and id_empresa = 20
-                        union all
-                        select * from (
+                $sql = "select * from (
                             select id_empresa, apelido as nome from ms.empresa 
                             where id_matriz = 1 
                             and id_empresa not in (26, 11, 28, 27, 20)
@@ -341,9 +336,11 @@ class CpCeController extends AbstractRestfulController
             $andSql = '';
             $andSqlVar = '';
             $andEmp = '';
-            if($emp  && $emp != "EC"){
-                $andSql = " and em.apelido = '$emp'";
-                $andEmp = " and empresa.apelido = '$emp'";
+            if($emp  && $emp != 20){
+                // $andSql = " and em.apelido = '$emp'";
+                // $andEmp = " and empresa.apelido = '$emp'";
+                $andSql = " and em.id_empresa = $emp";
+                $andEmp = " and empresa.id_empresa = $emp";
             }
             
             if($marca){
