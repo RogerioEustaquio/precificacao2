@@ -440,20 +440,21 @@ class CpCeController extends AbstractRestfulController
                             custo_anterior,
                             custo_operacao,
                             custo_resultante,
-                            (case when custo_anterior > 0 then round(((custo_operacao/custo_anterior)-1)*100,2) end) as v_ope_anterior,
+                            case when nvl(custo_anterior,0)>0 then (custo_operacao - custo_anterior) end ope_x_anterior_valor,
+                            (case when nvl(custo_anterior,0) > 0 then round( ((custo_operacao - custo_anterior)/custo_anterior)*100 ,2) end) as v_ope_anterior,
                             qtde_anterior, qtde_operacao, qtde_resultante,
                             custo_ult_ano_anterior,
-                            (case when custo_ult_ano_anterior > 0 then round(((custo_operacao/custo_ult_ano_anterior)-1)*100,2) end) as v_ope_ult_ano_anterior,
+                            (case when custo_ult_ano_anterior > 0 then round((((custo_operacao - custo_ult_ano_anterior)/custo_ult_ano_anterior))*100,2) end) as v_ope_ult_ano_anterior,
                             custo_med_ano_anterior,
-                            (case when custo_med_ano_anterior > 0 then round(((custo_operacao/custo_med_ano_anterior)-1)*100,2) end) as v_ope_med_ano_anterior,
+                            (case when custo_med_ano_anterior > 0 then round((((custo_operacao - custo_med_ano_anterior)/custo_med_ano_anterior))*100,2) end) as v_ope_med_ano_anterior,
                             custo_med_e_ano_anterior,
-                            (case when custo_med_e_ano_anterior > 0 then round(((custo_operacao/custo_med_e_ano_anterior)-1)*100,2) end) as v_ope_med_e_ano_anterior,
+                            (case when custo_med_e_ano_anterior > 0 then round((((custo_operacao - custo_med_e_ano_anterior)/custo_med_e_ano_anterior))*100,2) end) as v_ope_med_e_ano_anterior,
                             custo_med_e_12m_anterior,
-                            (case when custo_med_e_12m_anterior > 0 then round(((custo_operacao/custo_med_e_12m_anterior)-1)*100,2) end) as v_ope_med_e_12m_anterior,
+                            (case when custo_med_e_12m_anterior > 0 then round((((custo_operacao - custo_med_e_12m_anterior)/custo_med_e_12m_anterior))*100,2) end) as v_ope_med_e_12m_anterior,
                             custo_med_e_6m_anterior,
-                            (case when custo_med_e_6m_anterior > 0 then round(((custo_operacao/custo_med_e_6m_anterior)-1)*100,2) end) as v_ope_med_e_6m_anterior,
+                            (case when custo_med_e_6m_anterior > 0 then round((((custo_operacao - custo_med_e_6m_anterior)/custo_med_e_6m_anterior))*100,2) end) as v_ope_med_e_6m_anterior,
                             custo_med_e_3m_anterior,
-                            (case when custo_med_e_3m_anterior > 0 then round(((custo_operacao/custo_med_e_3m_anterior)-1)*100,2) end) as v_ope_med_e_3m_anterior 
+                            (case when custo_med_e_3m_anterior > 0 then round((((custo_operacao - custo_med_e_3m_anterior)/custo_med_e_3m_anterior))*100,2) end) as v_ope_med_e_3m_anterior 
                     from (
                         select em.apelido as emp,
                                 c.id_operacao,
@@ -576,6 +577,7 @@ class CpCeController extends AbstractRestfulController
             $hydrator->addStrategy('custo_med_e_12m_anterior', new ValueStrategy);
             $hydrator->addStrategy('custo_med_e_6m_anterior', new ValueStrategy);
             $hydrator->addStrategy('custo_med_e_3m_anterior', new ValueStrategy);
+            $hydrator->addStrategy('ope_x_anterior_valor', new ValueStrategy);
             $hydrator->addStrategy('v_ope_anterior', new ValueStrategy);
             $hydrator->addStrategy('v_ope_ult_ano_anterior', new ValueStrategy);
             $hydrator->addStrategy('v_ope_med_ano_anterior', new ValueStrategy);

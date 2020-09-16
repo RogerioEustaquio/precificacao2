@@ -10,8 +10,6 @@ Ext.define('App.view.cpce.ItemGrid', {
     constructor: function() {
         var me = this;
         var utilFormat = Ext.create('Ext.ux.util.Format');
-        // var operacaoTotal= 0;
-        // var opeXAnteriorValorTotal= 0;
 
         Ext.applyIf(me, {
     
@@ -48,6 +46,7 @@ Ext.define('App.view.cpce.ItemGrid', {
                                             {name:'custoMedE_12mAnterior',mapping:'custoMedE_12mAnterior', type: 'number'},
                                             {name:'custoMedE_6mAnterior',mapping:'custoMedE_6mAnterior', type: 'number'},
                                             {name:'custoMedE_3mAnterior',mapping:'custoMedE_3mAnterior', type: 'number'},
+                                            {name:'opeXAnteriorValor',mapping:'opeXAnteriorValor', type: 'number'},
 
                                             {name:'vOpeAnterior',mapping:'vOpeAnterior', type: 'number'},
                                             {name:'vOpeUltAnoAnterior',mapping:'vOpeUltAnoAnterior', type: 'number'},
@@ -416,24 +415,32 @@ Ext.define('App.view.cpce.ItemGrid', {
 
                                 v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                                 return v;
-                            }
-                            // summaryType: function(records, values) {
+                            },
+                            summaryType: function(records, values) {
 
-                            //     var i = 0,
-                            //         length = records.length,
-                            //         total = 0,
-                            //         totalAnt = 0,
-                            //         record;
+                                var i = 0,
+                                    length = records.length,
+                                    totalAnt = 0,
+                                    totalOpe = 0,
+                                    totalOpeAnt=0,
+                                    totalPAnt = 0,
+                                    record;
         
-                            //     for (; i < length; ++i) {
-                            //         record = records[i];
-                            //         if(record.get('custoMedE_6mAnterior'))
-                            //             total += parseFloat(record.get('custoMedE_6mAnterior'));
-                            //     }
+                                for (; i < length; ++i) {
+                                    record = records[i];
+                                    if(record.get('custoAnterior'))
+                                        totalAnt += parseFloat(record.get('custoAnterior'));
+                                    if(record.get('custoOperacao'))
+                                        totalOpe += parseFloat(record.get('custoOperacao'));
+                                    if(record.get('opeXAnteriorValor'))
+                                        totalOpeAnt += parseFloat(record.get('opeXAnteriorValor'));
+                                }
+
+                                totalPAnt = ((totalOpeAnt)/totalAnt)*100;
         
-                            //     totalAnt = (totalAnt < 0 || totalAnt > 0 ? utilFormat.Value(totalAnt) : null);
-                            //     return total;
-                            // }
+                                totalPAnt = (totalPAnt < 0 || totalPAnt > 0 ? utilFormat.Value(totalPAnt) : null);
+                                return totalPAnt;
+                            }
                         },
                         {
                             text: 'Últ. Ano <br> Anterior',
@@ -450,6 +457,31 @@ Ext.define('App.view.cpce.ItemGrid', {
 
                                 v = (idStatus <= -0.01 || idStatus >= 0.01 ? utilFormat.Value(v) : null);
                                 return v;
+                            },
+                            summaryType: function(records, values) {
+
+                                var i = 0,
+                                    length = records.length,
+                                    totalAnt = 0,
+                                    totalOpe = 0,
+                                    totalPAnt = 0,
+                                    record;
+        
+                                for (; i < length; ++i) {
+                                    record = records[i];
+                                    
+                                    if(record.get('custoUltAnoAnterior')){
+
+                                        totalAnt += parseFloat(record.get('custoUltAnoAnterior'));
+                                        totalOpe += parseFloat(record.get('custoOperacao'));
+                                    }
+                                }
+
+                                if(totalAnt)
+                                    totalPAnt = ((totalOpe-totalAnt)/totalAnt)*100;
+        
+                                totalPAnt = (totalPAnt < 0 || totalPAnt > 0 ? utilFormat.Value(totalPAnt) : null);
+                                return totalPAnt;
                             }
                         },
                         {
@@ -467,6 +499,29 @@ Ext.define('App.view.cpce.ItemGrid', {
                                     
                                 v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                                 return v;
+                            },
+                            summaryType: function(records, values) {
+
+                                var i = 0,
+                                    length = records.length,
+                                    totalMedAnt = 0,
+                                    totalOpe = 0,
+                                    totalPMedAnt = 0,
+                                    record;
+        
+                                for (; i < length; ++i) {
+                                    record = records[i];
+                                    
+                                    if(parseFloat(record.get('custoMedAnoAnterior'))){
+                                        totalMedAnt += parseFloat(record.get('custoMedAnoAnterior'));
+                                        totalOpe += parseFloat(record.get('custoOperacao'));
+                                    }
+                                }
+                                if(totalMedAnt)
+                                    totalPMedAnt = ((totalOpe-totalMedAnt)/totalMedAnt)*100;
+        
+                                totalPMedAnt = (totalPMedAnt < 0 || totalPMedAnt > 0 ? utilFormat.Value(totalPMedAnt) : null);
+                                return totalPMedAnt;
                             }
                         },
                         {
@@ -484,6 +539,29 @@ Ext.define('App.view.cpce.ItemGrid', {
                                     
                                 v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                                 return v;
+                            },
+                            summaryType: function(records, values) {
+
+                                var i = 0,
+                                    length = records.length,
+                                    totalMedEAnt = 0,
+                                    totalOpe = 0,
+                                    totalPMedEAnt = 0,
+                                    record;
+        
+                                for (; i < length; ++i) {
+                                    record = records[i];
+                                    
+                                    if(parseFloat(record.get('custoMedEAnoAnterior'))){
+                                        totalMedEAnt += parseFloat(record.get('custoMedEAnoAnterior'));
+                                        totalOpe += parseFloat(record.get('custoOperacao'));
+                                    }
+                                }
+                                if(totalMedEAnt)
+                                    totalPMedEAnt = ((totalOpe-totalMedEAnt)/totalMedEAnt)*100;
+        
+                                totalPMedEAnt = (totalPMedEAnt < 0 || totalPMedEAnt > 0 ? utilFormat.Value(totalPMedEAnt) : null);
+                                return totalPMedEAnt;
                             }
                         },
                         {
@@ -501,6 +579,29 @@ Ext.define('App.view.cpce.ItemGrid', {
                                     
                                 v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                                 return v;
+                            },
+                            summaryType: function(records, values) {
+
+                                var i = 0,
+                                    length = records.length,
+                                    totalMedEAnt12 = 0,
+                                    totalOpe = 0,
+                                    totalPMedEAnt12 = 0,
+                                    record;
+        
+                                for (; i < length; ++i) {
+                                    record = records[i];
+                                    
+                                    if(parseFloat(record.get('custoMedE_12mAnterior'))){
+                                        totalMedEAnt12 += parseFloat(record.get('custoMedE_12mAnterior'));
+                                        totalOpe += parseFloat(record.get('custoOperacao'));
+                                    }
+                                }
+                                if(totalMedEAnt12)
+                                    totalPMedEAnt12 = ((totalOpe-totalMedEAnt12)/totalMedEAnt12)*100;
+        
+                                totalPMedEAnt12 = (totalPMedEAnt12 < 0 || totalPMedEAnt12 > 0 ? utilFormat.Value(totalPMedEAnt12) : null);
+                                return totalPMedEAnt12;
                             }
                         },
                         {
@@ -518,6 +619,29 @@ Ext.define('App.view.cpce.ItemGrid', {
                                     
                                 v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                                 return v;
+                            },
+                            summaryType: function(records, values) {
+
+                                var i = 0,
+                                    length = records.length,
+                                    totalMedEAnt6 = 0,
+                                    totalOpe = 0,
+                                    totalPMedEAnt6 = 0,
+                                    record;
+        
+                                for (; i < length; ++i) {
+                                    record = records[i];
+                                    
+                                    if(parseFloat(record.get('custoMedE_6mAnterior'))){
+                                        totalMedEAnt6 += parseFloat(record.get('custoMedE_6mAnterior'));
+                                        totalOpe += parseFloat(record.get('custoOperacao'));
+                                    }
+                                }
+                                if(totalMedEAnt6)
+                                    totalPMedEAnt6 = ((totalOpe-totalMedEAnt6)/totalMedEAnt6)*100;
+        
+                                totalPMedEAnt6 = (totalPMedEAnt6 < 0 || totalPMedEAnt6 > 0 ? utilFormat.Value(totalPMedEAnt6) : null);
+                                return totalPMedEAnt6;
                             }
                         },
                         {
@@ -535,6 +659,29 @@ Ext.define('App.view.cpce.ItemGrid', {
                                     
                                 v = (idStatus < 0 || idStatus > 0 ? utilFormat.Value(v) : null);
                                 return v;
+                            },
+                            summaryType: function(records, values) {
+
+                                var i = 0,
+                                    length = records.length,
+                                    totalMedEAnt3 = 0,
+                                    totalOpe = 0,
+                                    totalPMedEAnt3 = 0,
+                                    record;
+        
+                                for (; i < length; ++i) {
+                                    record = records[i];
+                                    
+                                    if(parseFloat(record.get('custoMedE_3mAnterior'))){
+                                        totalMedEAnt3 += parseFloat(record.get('custoMedE_3mAnterior'));
+                                        totalOpe += parseFloat(record.get('custoOperacao'));
+                                    }
+                                }
+                                if(totalMedEAnt3)
+                                    totalPMedEAnt3 = ((totalOpe-totalMedEAnt3)/totalMedEAnt3)*100;
+        
+                                totalPMedEAnt3 = (totalPMedEAnt3 < 0 || totalPMedEAnt3 > 0 ? utilFormat.Value(totalPMedEAnt3) : null);
+                                return totalPMedEAnt3;
                             }
                         }
                     ]
