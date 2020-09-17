@@ -169,7 +169,7 @@ Ext.define('App.view.cpce.CpCeToolbar', {
                 };
 
                 itemgrid.getStore().getProxy().setExtraParams(params);
-                itemgrid.getStore().load();
+                itemgrid.getStore().loadPage(1);
 
             }
         });
